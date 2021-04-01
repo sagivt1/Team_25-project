@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d93218a2-abb4-4207-96b9-6adb9d9deac4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/zero_dawn_project/MainPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/zero_dawn_project/MainPage.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,6 +32,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -70,23 +70,30 @@
       <option name="presentableId" value="LOCAL‎00002" />
       <updated>1617277484450</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL‎00003" summary="BSPM2021T25-251 Test Jira and GitHub integration 2">
+      <created>1617289069176</created>
+      <option name="number" value="LOCAL‎00003" />
+      <option name="presentableId" value="LOCAL‎00003" />
+      <updated>1617289069176</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="jenkins commit" />
     <MESSAGE value="BSPM2021T25-251 Test Jira and GitHub integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="BSPM2021T25-251 Test Jira and GitHub integration" />
+    <MESSAGE value="BSPM2021T25-251 Test Jira and GitHub integration 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="BSPM2021T25-251 Test Jira and GitHub integration 2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="593" y="264" width="1233" height="744" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1617274811024">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="593" y="264" width="1233" height="744" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1617274811024" />
-    <state x="804" y="128" width="1107" height="959" key="CommitChangelistDialog2" timestamp="1617277483833">
+    <state x="727" y="130" width="1107" height="959" key="CommitChangelistDialog2" timestamp="1617289068466">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="804" y="128" width="1107" height="959" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1617277483833" />
+    <state x="727" y="130" width="1107" height="959" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1617289068466" />
     <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1617278384045">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

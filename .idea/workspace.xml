@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d93218a2-abb4-4207-96b9-6adb9d9deac4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Jenkins/Jenkinsfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,17 +57,28 @@
       <option name="presentableId" value="Default" />
       <updated>1617274697887</updated>
     </task>
+    <task id="LOCAL‎00001" summary="jenkins commit">
+      <created>1617275797659</created>
+      <option name="number" value="LOCAL‎00001" />
+      <option name="presentableId" value="LOCAL‎00001" />
+      <updated>1617275797659</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="jenkins commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="jenkins commit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="593" y="264" width="1233" height="744" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1617274811024">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="593" y="264" width="1233" height="744" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1617274811024" />
-    <state x="934" y="294" key="CommitChangelistDialog2" timestamp="1617275705877">
+    <state x="804" y="128" width="1107" height="959" key="CommitChangelistDialog2" timestamp="1617275797080">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="934" y="294" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1617275705877" />
+    <state x="804" y="128" width="1107" height="959" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1617275797080" />
     <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1617275197475">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -84,9 +95,9 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1617275197475" />
-    <state x="976" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1617275667529">
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1617277400694">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="976" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1617275667529" />
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1617277400694" />
   </component>
 </project>

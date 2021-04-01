@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d93218a2-abb4-4207-96b9-6adb9d9deac4" name="Default Changelist" comment="BSPM2021T25-251 Test Jira and GitHub integration 2">
+    <list default="true" id="d93218a2-abb4-4207-96b9-6adb9d9deac4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/zero_dawn_project/MainPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/zero_dawn_project/MainPage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainPage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +86,13 @@
       <option name="presentableId" value="LOCAL‎00003" />
       <updated>1617289069176</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL‎00004" summary="BSPM2021T25-251 Test Jira and GitHub integration 4">
+      <created>1617291299464</created>
+      <option name="number" value="LOCAL‎00004" />
+      <option name="presentableId" value="LOCAL‎00004" />
+      <updated>1617291299464</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -107,36 +112,37 @@
     <MESSAGE value="jenkins commit" />
     <MESSAGE value="BSPM2021T25-251 Test Jira and GitHub integration" />
     <MESSAGE value="BSPM2021T25-251 Test Jira and GitHub integration 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="BSPM2021T25-251 Test Jira and GitHub integration 2" />
+    <MESSAGE value="BSPM2021T25-251 Test Jira and GitHub integration 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="BSPM2021T25-251 Test Jira and GitHub integration 4" />
   </component>
   <component name="WindowStateProjectService">
     <state x="934" y="294" key="CommitChangelistDialog2" timestamp="1617291298868">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="934" y="294" key="CommitChangelistDialog2/0.0.2560.1400@0.0.2560.1400" timestamp="1617291298868" />
-    <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1617291364466">
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1617291506580">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1617291364466" />
-    <state width="2517" height="401" key="GridCell.Tab.0.center" timestamp="1617291364466">
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1617291506580" />
+    <state width="2517" height="401" key="GridCell.Tab.0.center" timestamp="1617291506580">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1617291364466" />
-    <state width="2517" height="401" key="GridCell.Tab.0.left" timestamp="1617291364465">
+    <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1617291506580" />
+    <state width="2517" height="401" key="GridCell.Tab.0.left" timestamp="1617291506580">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1617291364465" />
-    <state width="2517" height="401" key="GridCell.Tab.0.right" timestamp="1617291364466">
+    <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1617291506580" />
+    <state width="2517" height="401" key="GridCell.Tab.0.right" timestamp="1617291506580">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1617291364466" />
+    <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1617291506580" />
     <state x="872" y="433" key="Vcs.Push.Dialog.v2" timestamp="1617291337002">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="872" y="433" key="Vcs.Push.Dialog.v2/0.0.2560.1400@0.0.2560.1400" timestamp="1617291337002" />
-    <state x="976" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1617290890062">
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1617291541139">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="976" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1617290890062" />
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1617291541139" />
   </component>
 </project>

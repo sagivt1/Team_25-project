@@ -1,7 +1,13 @@
+import Database.ZeroDawnDatabase;
+
 public class MainPage {
 
     public static void main(String[] args) {
-        System.out.println("");
+
+        ZeroDawnDatabase db = new ZeroDawnDatabase();
+        db.GetDb();
+
+
     }
 
 }

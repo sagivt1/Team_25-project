@@ -7,7 +7,6 @@ public class MainPage {
         ZeroDawnDatabase db = new ZeroDawnDatabase();
         db.GetDb();
 
-
     }
 
 }

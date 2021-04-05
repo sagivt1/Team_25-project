@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class ZeroDawnDatabase {
 
-    Connection conn = null;
+
 
 
     /*
@@ -13,13 +13,13 @@ public class ZeroDawnDatabase {
     *
     * before use this class change the password to your localhost password
     *  */
-    public Connection GetDb(){
-
+    public static Connection GetDbCon(){
+        Connection conn = null;
         try {
 
             String url = "jdbc:mysql://localhost/zero_dawn?useSSL=false";
             String user = "root";
-            String password = "*******";//Edit to your mysql password
+            String password = "***";//Edit to your mysql password
 
             conn = DriverManager.getConnection(url, user, password);
 

@@ -13,11 +13,11 @@ public class Parent extends User {
     public Parent() {
     }
 
-    public Parent(String ParentID, String lname, String fname, String password, Date birth_date, String email){
-        super(ParentID, lname, fname, password, birth_date, email);
+    public Parent(String ParentID, String password, String lname, String fname, Date birth_date, String email){
+        super(ParentID,password, lname, fname,  birth_date, email);
     }
 
-    public void SignUp(String Id, String FirstName, String LastName, String Password, Date BirthDate,
+    public void SignUp(String Id, String Password, String FirstName, String LastName, Date BirthDate,
                        String email){
         Connection con = ZeroDawnDatabase.GetDbCon();
         if(con == null)

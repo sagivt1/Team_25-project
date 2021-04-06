@@ -1,12 +1,12 @@
-import Database.ZeroDawnDatabase;
 import users.Counselor;
 import users.Parent;
 import users.Student;
 import users.User;
 
-import java.sql.*;
+import java.sql.Date;
 import java.util.Scanner;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainPage {
@@ -29,11 +29,10 @@ public class MainPage {
         while(true) {
             if (mSelect == 1) {
                 sign_up();
-                //we need to change the sign-up function from void to return
+                System.out.println("Welcome to the system");
             }
             if (mSelect == 2) {
                 login();
-                //we need to change the login function from void to return
             }
             if (mSelect == 3) {
                 System.exit(0);
@@ -41,7 +40,7 @@ public class MainPage {
         }
     }
 
-    public static void sign_up(){
+    public static User sign_up(){
 
         String ID;
         String pass;
@@ -170,18 +169,20 @@ public class MainPage {
         switch (type){
             case '1':
                 Student student = new Student();
-                student.SignUp(ID, fName, lName, pass, BirthDate, email);
-                break;
+                student.SignUp(ID,pass, fName, lName, BirthDate, email);
+                return student;
             case '2':
                 Parent parent = new Parent();
-                parent.SignUp(ID, fName, lName, pass, BirthDate, email);
-                break;
+                parent.SignUp(ID, pass, fName, lName, BirthDate, email);
+                return parent;
             case '3':
                 Counselor counselor = new Counselor();
-                counselor.SignUp(ID, fName, lName, pass, BirthDate, email);
-                break;
+                counselor.SignUp(ID, pass, fName, lName, BirthDate, email);
+                return counselor;
         }
-        System.out.println("Welcome to the system");
+
+
+        return null;
 
     }
 

@@ -12,16 +12,16 @@ public class User {
 
 
     protected String UserID;
+    protected String password;
     protected String lname;
     protected String fname;
-    protected String password;
     protected Date birth_date;
     protected String email;
 
     public User() {
     }
 
-    public User(String UserID, String lname, String fname, String password, Date birth_date, String email){
+    public User(String UserID, String password, String fname, String lname, Date birth_date, String email){
         this.UserID = UserID;
         this.lname = lname;
         this.fname = fname;

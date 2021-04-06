@@ -16,11 +16,11 @@ public class Counselor extends User {
     public Counselor() {
     }
 
-    public Counselor(String CounselorID, String lname, String fname, String password, Date birth_date, String email){
-        super(CounselorID, lname, fname, password, birth_date, email);
+    public Counselor(String CounselorID, String password, String lname, String fname, Date birth_date, String email){
+        super(CounselorID, password, lname, fname, birth_date, email);
     }
 
-    public void SignUp(String Id, String FirstName, String LastName, String Password, Date BirthDate,
+    public void SignUp(String Id, String Password, String FirstName, String LastName,  Date BirthDate,
                        String email) {
         Connection con = ZeroDawnDatabase.GetDbCon();
         if (con == null) {

@@ -4,6 +4,9 @@ import Database.ZeroDawnDatabase;
 
 import java.sql.*;
 import java.util.Objects;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*
 User basic class
@@ -193,6 +196,140 @@ public class User {
         }
 
         return null;
+    }
+
+
+    public void EditEmail()
+    {
+        Scanner scanM = new Scanner(System.in);
+        String NewMail;
+
+        while (true) {
+            String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
+            Pattern pattern = Pattern.compile(regex);
+            System.out.print("Enter user email: ");
+            NewMail = scanM.nextLine();
+            Matcher match = pattern.matcher(NewMail);
+            if (!NewMail.isEmpty() && match.matches()) {
+                break;
+            }
+            else {
+                System.out.println("you didn't insert an email or the email is Invalid, please try again..");
+            }
+        }
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        try {
+            String query = "update users set email = ? where id = ?;";
+            assert con != null;
+            PreparedStatement stmt = con.prepareCall(query);
+
+            stmt.setString(1,NewMail);
+            stmt.setString(2,UserID);
+            stmt.execute();
+            email = NewMail;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void EditLastName()
+    {
+        Scanner scanM = new Scanner(System.in);
+        String NewLastName;
+
+        while (true) {
+            System.out.print("Enter user new last name: ");
+            NewLastName = scanM.nextLine();
+            if (!NewLastName.isEmpty()) {
+                break;
+            }
+            else {
+                System.out.println("you didn't insert your new last name, please try again..");
+            }
+        }
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        try {
+            String query = "update users set last_name = ? where id = ?;";
+            assert con != null;
+            PreparedStatement stmt = con.prepareCall(query);
+
+            stmt.setString(1,NewLastName);
+            stmt.setString(2,UserID);
+            stmt.execute();
+            lname = NewLastName;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void EditFristName()
+    {
+        Scanner scanM = new Scanner(System.in);
+        String NewFirstName;
+
+        while (true) {
+            System.out.print("Enter user new first name: ");
+            NewFirstName = scanM.nextLine();
+            if (!NewFirstName.isEmpty()) {
+                break;
+            }
+            else {
+                System.out.println("you didn't insert your new first name, please try again..");
+            }
+        }
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        try {
+            String query = "update users set first_name = ? where id = ?;";
+            assert con != null;
+            PreparedStatement stmt = con.prepareCall(query);
+
+            stmt.setString(1,NewFirstName);
+            stmt.setString(2,UserID);
+            stmt.execute();
+            fname = NewFirstName;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void EditPassword(){
+        Scanner scanM = new Scanner(System.in);
+        String NewPassword;
+
+        while (true) {
+            System.out.print("Enter new password: ");
+            NewPassword = scanM.nextLine();
+            if (!NewPassword.isEmpty()) {
+                break;
+            }
+            else {
+                System.out.println("you didn't insert a new password, please try again..");
+            }
+        }
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        try {
+            String query = "update users set password = ? where id = ?;";
+            assert con != null;
+            PreparedStatement stmt = con.prepareCall(query);
+
+            stmt.setString(1,NewPassword);
+            stmt.setString(2,UserID);
+            stmt.execute();
+            password = NewPassword;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 }

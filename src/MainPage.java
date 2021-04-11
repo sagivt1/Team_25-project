@@ -14,6 +14,7 @@ public class MainPage {
     public static void main(String[] args) {
 
         Scanner scanM = new Scanner(System.in);
+        User user;
         String newLine = System.getProperty("line.separator");
         System.out.println("------------Welcome To Zero Dawn------------");
         System.out.println("1.Sign Up");
@@ -28,17 +29,30 @@ public class MainPage {
         }
         while(true) {
             if (mSelect == 1) {
-                sign_up();
-                System.out.println("Welcome to the system");
+                user = sign_up();
+                if(user.getClass().equals(Student.class))
+                    StudentMenu((Student) user);
+                if(user.getClass().equals(Counselor.class))
+                    CounselorMenu((Counselor) user);
+                if(user.getClass().equals(Parent.class))
+                    ParentMenu((Parent) user);
             }
             if (mSelect == 2) {
-                login();
+                user = login();
+                if(user.getClass().equals(Student.class))
+                    StudentMenu((Student) user);
+                if(user.getClass().equals(Counselor.class))
+                    CounselorMenu((Counselor) user);
+                if(user.getClass().equals(Parent.class))
+                    ParentMenu((Parent) user);
             }
             if (mSelect == 3) {
                 System.exit(0);
             }
         }
     }
+
+
 
     public static User sign_up(){
 
@@ -222,5 +236,101 @@ public class MainPage {
         return User.Login(ID,pass);
 
     }
+
+    public static void StudentMenu(Student student) {
+        Scanner scanM = new Scanner(System.in);
+        int Opt;
+        while(true) {
+            System.out.println("1.Edit profile");
+            System.out.println("2.Exit");
+            Opt = scanM.nextInt();
+
+
+            switch (Opt) {
+                case 1:
+                    Edit(student);
+                    break;
+                case 2:
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option");
+            }
+        }
+    }
+
+    public static void CounselorMenu(Counselor counselor) {
+        Scanner scanM = new Scanner(System.in);
+        int Opt;
+        System.out.println("1.Edit profile");
+        System.out.println("2.Exit");
+        Opt = scanM.nextInt();
+
+        while(true) {
+            switch (Opt) {
+                case 1:
+                    Edit(counselor);
+                    break;
+                case 2:
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option");
+            }
+        }
+
+    }
+
+    public static void ParentMenu(Parent parent) {
+        Scanner scanM = new Scanner(System.in);
+        int Opt;
+        System.out.println("1.Edit profile");
+        System.out.println("2.Exit");
+        Opt = scanM.nextInt();
+
+        while(true) {
+            switch (Opt) {
+                case 1:
+                    Edit(parent);
+                    break;
+                case 2:
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option");
+            }
+        }
+    }
+
+    public static void Edit(User user){
+        Scanner scanM = new Scanner(System.in);
+        int Opt;
+        while (true) {
+            System.out.println("1.Edit password");
+            System.out.println("2.Edit first name");
+            System.out.println("3.Edit last name");
+            System.out.println("4.Edit email");
+            System.out.println("5.Back to main menu");
+
+            Opt = scanM.nextInt();
+
+            switch (Opt) {
+                case 1:
+                    user.EditPassword();
+                    break;
+                case 2:
+                    user.EditFristName();
+                    break;
+                case 3:
+                    user.EditLastName();
+                    break;
+                case 4:
+                    user.EditEmail();
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.out.println("Invalid option");
+            }
+        }
+    }
+
 
 }

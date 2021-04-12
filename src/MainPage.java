@@ -15,36 +15,44 @@ public class MainPage {
 
         Scanner scanM = new Scanner(System.in);
         User user;
-        String newLine = System.getProperty("line.separator");
-        System.out.println("------------Welcome To Zero Dawn------------");
-        System.out.println("1.Sign Up");
-        System.out.println("2.Login");
-        System.out.println("3.Exit");
 
-        int mSelect = scanM.nextInt();
-        while (mSelect != 1 && mSelect != 2 && mSelect != 3)
-        {
-            System.out.print("Wrong Input, try again: ");
-            mSelect = scanM.nextInt();
-        }
+
         while(true) {
+
+            String newLine = System.getProperty("line.separator");
+            System.out.println("------------Welcome To Zero Dawn------------");
+            System.out.println("1.Sign Up");
+            System.out.println("2.Login");
+            System.out.println("3.Exit");
+
+            int mSelect = scanM.nextInt();
+            while (mSelect != 1 && mSelect != 2 && mSelect != 3)
+            {
+                System.out.print("Wrong Input, try again: ");
+                mSelect = scanM.nextInt();
+            }
+
             if (mSelect == 1) {
                 user = sign_up();
-                if(user.getClass().equals(Student.class))
-                    StudentMenu((Student) user);
-                if(user.getClass().equals(Counselor.class))
-                    CounselorMenu((Counselor) user);
-                if(user.getClass().equals(Parent.class))
-                    ParentMenu((Parent) user);
+                if(user != null) {
+                    if (user.getClass().equals(Student.class))
+                        StudentMenu((Student) user);
+                    if (user.getClass().equals(Counselor.class))
+                        CounselorMenu((Counselor) user);
+                    if (user.getClass().equals(Parent.class))
+                        ParentMenu((Parent) user);
+                }
             }
             if (mSelect == 2) {
                 user = login();
-                if(user.getClass().equals(Student.class))
-                    StudentMenu((Student) user);
-                if(user.getClass().equals(Counselor.class))
-                    CounselorMenu((Counselor) user);
-                if(user.getClass().equals(Parent.class))
-                    ParentMenu((Parent) user);
+                if(user != null) {
+                    if (user.getClass().equals(Student.class))
+                        StudentMenu((Student) user);
+                    if (user.getClass().equals(Counselor.class))
+                        CounselorMenu((Counselor) user);
+                    if (user.getClass().equals(Parent.class))
+                        ParentMenu((Parent) user);
+                }
             }
             if (mSelect == 3) {
                 System.exit(0);
@@ -251,7 +259,8 @@ public class MainPage {
                     Edit(student);
                     break;
                 case 2:
-                    System.exit(0);
+                    student = null;
+                    return;
                 default:
                     System.out.println("Invalid option");
             }
@@ -271,7 +280,8 @@ public class MainPage {
                     Edit(counselor);
                     break;
                 case 2:
-                    System.exit(0);
+                    counselor = null;
+                    return;
                 default:
                     System.out.println("Invalid option");
             }
@@ -292,7 +302,8 @@ public class MainPage {
                     Edit(parent);
                     break;
                 case 2:
-                    System.exit(0);
+                    parent = null;
+                    return;
                 default:
                     System.out.println("Invalid option");
             }
@@ -313,16 +324,71 @@ public class MainPage {
 
             switch (Opt) {
                 case 1:
-                    user.EditPassword();
+                    scanM = new Scanner(System.in);
+                    String NewPassword;
+
+                    while (true) {
+                        System.out.print("Enter new password: ");
+                        NewPassword = scanM.nextLine();
+                        if (!NewPassword.isEmpty()) {
+                            break;
+                        }
+                        else {
+                            System.out.println("you didn't insert a new password, please try again..");
+                        }
+                    }
+                    user.EditPassword(NewPassword);
                     break;
                 case 2:
-                    user.EditFristName();
+                    scanM = new Scanner(System.in);
+                    String NewFirstName;
+
+                    while (true) {
+                        System.out.print("Enter user new first name: ");
+                        NewFirstName = scanM.nextLine();
+                        if (!NewFirstName.isEmpty()) {
+                            break;
+                        }
+                        else {
+                            System.out.println("you didn't insert your new first name, please try again..");
+                        }
+                    }
+                    user.EditFristName(NewFirstName);
                     break;
                 case 3:
-                    user.EditLastName();
+                    scanM = new Scanner(System.in);
+                    String NewLastName;
+
+                    while (true) {
+                        System.out.print("Enter user new last name: ");
+                        NewLastName = scanM.nextLine();
+                        if (!NewLastName.isEmpty()) {
+                            break;
+                        }
+                        else {
+                            System.out.println("you didn't insert your new last name, please try again..");
+                        }
+                    }
+                    user.EditLastName(NewLastName);
                     break;
                 case 4:
-                    user.EditEmail();
+                    scanM = new Scanner(System.in);
+                    String NewMail;
+
+                    while (true) {
+                        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
+                        Pattern pattern = Pattern.compile(regex);
+                        System.out.print("Enter user email: ");
+                        NewMail = scanM.nextLine();
+                        Matcher match = pattern.matcher(NewMail);
+                        if (!NewMail.isEmpty() && match.matches()) {
+                            break;
+                        }
+                        else {
+                            System.out.println("you didn't insert an email or the email is Invalid, please try again..");
+                        }
+                    }
+                    user.EditEmail(NewMail);
                     break;
                 case 5:
                     return;

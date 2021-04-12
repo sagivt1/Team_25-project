@@ -34,6 +34,11 @@ class UserTest {
             stmt.setString(6, "abc@gmail.com");
             stmt.execute();
 
+            query = "INSERT INTO student Values(?)";
+            stmt = con.prepareCall(query);
+            stmt.setString(1, "000000000");
+            stmt.execute();
+
             query = "INSERT INTO users Values(?,?,?,?,?,?)";
             stmt = con.prepareCall(query);
 
@@ -50,6 +55,10 @@ class UserTest {
             stmt.setString(1,"111111111");
             stmt.execute();
 
+            query = "INSERT INTO student Values(?)";
+            stmt = con.prepareCall(query);
+            stmt.setString(1, "111111111");
+            stmt.execute();
 
 
             con.close();
@@ -63,7 +72,7 @@ class UserTest {
 
     }
 
-        @AfterEach
+    @AfterEach
     void tearDown() throws SQLException {
             Connection con = ZeroDawnDatabase.GetDbCon();
             if(con == null)
@@ -85,10 +94,67 @@ class UserTest {
     void login() {
 
         User user = new User();
-        user = User.Login("000000000", "123456");
+        user = User.Login("000000001", "123456");
         Assert.assertNotEquals(user, test);
         user = User.Login("111111111", "123456");
         Assert.assertEquals(user, parent);
-
     }
+
+    @Test
+    void Disconnect() {
+        User user = new User();
+        user = User.Login("000000000", "123456");
+        //if user chose to Disconnect then user = null
+        user = null;
+        Assert.assertNull(user);
+    }
+
+    @Test
+    void EditPassword() {
+
+        User user = new User();
+        user = User.Login("000000000", "123456");
+        user.EditPassword("654321");
+        user = User.Login("000000000", "654321");
+        test.password = "654321";
+        Assert.assertEquals(user,test);
+    }
+
+    @Test
+    void EditFirstName() {
+
+        User user = new User();
+        user = User.Login("000000000", "123456");
+        user.EditFristName("S");
+        user = User.Login("000000000", "123456");
+        test.fname = "S";
+        Assert.assertEquals(user,test);
+    }
+
+    @Test
+    void EditLastName() {
+
+        User user = new User();
+        user = User.Login("000000000", "123456");
+        user.EditLastName("G");
+        user = User.Login("000000000", "123456");
+        test.lname = "G";
+        Assert.assertEquals(user,test);
+    }
+
+    @Test
+    void EditEmail() {
+
+        User user = new User();
+        user = User.Login("000000000", "123456");
+        user.EditEmail("aaa@gmail.com");
+        user = User.Login("000000000", "123456");
+        test.email = "aaa@gmail.com";
+        Assert.assertEquals(user,test);
+    }
+
+
+
+
+
 }

@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
+                sh 'java -version'
                 sh 'javac src/MainPage.java'
             }
         }

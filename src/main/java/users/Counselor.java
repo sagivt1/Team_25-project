@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Counselor extends User {
+public class Counselor extends users.User {
 
 
 

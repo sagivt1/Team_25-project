@@ -247,18 +247,18 @@ public class MainPage {
 
     public static void StudentMenu(Student student) {
         Scanner scanM = new Scanner(System.in);
-        int Opt;
+        String Opt;
         while(true) {
             System.out.println("1.Edit profile");
             System.out.println("2.Exit");
-            Opt = scanM.nextInt();
+            Opt = scanM.next();
 
 
             switch (Opt) {
-                case 1:
+                case "1":
                     Edit(student);
                     break;
-                case 2:
+                case "2":
                     student = null;
                     return;
                 default:
@@ -269,17 +269,41 @@ public class MainPage {
 
     public static void CounselorMenu(Counselor counselor) {
         Scanner scanM = new Scanner(System.in);
-        int Opt;
-        System.out.println("1.Edit profile");
-        System.out.println("2.Exit");
-        Opt = scanM.nextInt();
+        String Opt;
+        System.out.println("1.Add new test");
+        System.out.println("2.Edit test");
+        System.out.println("3.Remove/Inactive test");
+        System.out.println("4.Present Potential marked students");
+        System.out.println("5.Manage users");
+        System.out.println("6.Run simulate");
+        System.out.println("7.Edit admin information");
+        System.out.println("8.exit");
+        Opt = scanM.next();
 
         while(true) {
             switch (Opt) {
-                case 1:
+                case "1":
+                    //Add new test function
+                    break;
+                case "2":
+                    //Edit test function
+                    break;
+                case "3":
+                    //Remove/Inactive test function
+                    break;
+                case "4":
+                    //marked student function
+                    break;
+                case "5":
+                    //manage users function
+                    break;
+                case "6":
+                    //simulate function
+                    break;
+                case "7":
                     Edit(counselor);
                     break;
-                case 2:
+                case "8":
                     counselor = null;
                     return;
                 default:
@@ -291,17 +315,17 @@ public class MainPage {
 
     public static void ParentMenu(Parent parent) {
         Scanner scanM = new Scanner(System.in);
-        int Opt;
+        String Opt;
         System.out.println("1.Edit profile");
         System.out.println("2.Exit");
-        Opt = scanM.nextInt();
+        Opt = scanM.next();
 
         while(true) {
             switch (Opt) {
-                case 1:
+                case "1":
                     Edit(parent);
                     break;
-                case 2:
+                case "2":
                     parent = null;
                     return;
                 default:

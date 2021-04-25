@@ -4,6 +4,7 @@ import users.Student;
 import users.User;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -270,20 +271,25 @@ public class MainPage {
     public static void CounselorMenu(Counselor counselor) {
         Scanner scanM = new Scanner(System.in);
         String Opt;
-        System.out.println("1.Add new test");
-        System.out.println("2.Edit test");
-        System.out.println("3.Remove/Inactive test");
-        System.out.println("4.Present Potential marked students");
-        System.out.println("5.Manage users");
-        System.out.println("6.Run simulate");
-        System.out.println("7.Edit admin information");
-        System.out.println("8.exit");
-        Opt = scanM.next();
 
         while(true) {
+            System.out.println("1.Add new test");
+            System.out.println("2.Edit test");
+            System.out.println("3.Remove/Inactive test");
+            System.out.println("4.Present Potential marked students");
+            System.out.println("5.Manage users");
+            System.out.println("6.Run simulate");
+            System.out.println("7.Edit admin information");
+            System.out.println("8.exit");
+            Opt = scanM.next();
             switch (Opt) {
                 case "1":
-                    //Add new test function
+                    try {
+                        counselor.AddNewTest();
+                    }catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
                     break;
                 case "2":
                     //Edit test function

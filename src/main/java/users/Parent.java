@@ -5,20 +5,24 @@ users.Parent
 import Database.ZeroDawnDatabase;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Parent extends User {
 
-
+    ArrayList<Student> Kids;
 
     public Parent() {
+        Kids = new ArrayList<Student>();
     }
 
     public Parent(String ParentID, String password, String lname, String fname, Date birth_date, String email){
         super(ParentID,password, lname, fname,  birth_date, email);
+        Kids = new ArrayList<Student>();
     }
 
     public void SignUp(String Id, String Password, String FirstName, String LastName, Date BirthDate,
                        String email){
+        Kids = new ArrayList<Student>();
         Connection con = ZeroDawnDatabase.GetDbCon();
         if(con == null)
         {

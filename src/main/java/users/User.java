@@ -149,7 +149,8 @@ public class User {
                             res.getString("first_name"),
                             res.getString("last_name"),
                             res.getDate("birth_date"),
-                            res.getString("email")
+                            res.getString("email"),
+                            res.getInt("grade")
                     );
                     res.close();
                     con.close();
@@ -238,7 +239,6 @@ public class User {
 
     public void EditFristName(String NewFirstName)
     {
-
 
         Connection con = ZeroDawnDatabase.GetDbCon();
         try {

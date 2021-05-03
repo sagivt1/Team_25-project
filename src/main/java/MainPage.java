@@ -192,7 +192,7 @@ public class MainPage {
         switch (type){
             case '1':
                 Student student = new Student();
-                student.SignUp(ID,pass, fName, lName, BirthDate, email);
+                student.SignUp(ID,pass, fName, lName, BirthDate, email,1);
                 return student;
             case '2':
                 Parent parent = new Parent();
@@ -284,12 +284,7 @@ public class MainPage {
             Opt = scanM.next();
             switch (Opt) {
                 case "1":
-                    try {
-                        counselor.AddNewTest();
-                    }catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-
+                    counselor.AddNewTest();
                     break;
                 case "2":
                     //Edit test function

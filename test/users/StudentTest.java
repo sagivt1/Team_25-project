@@ -35,7 +35,7 @@ class StudentTest {
     @Test
     void signUp() {
         Student student = new Student();
-        student.SignUp("000000000", "123456", "A", "B", Date.valueOf("2013-12-05"), "abcd@gmail.com" );
+        student.SignUp("000000000", "123456", "A", "B", Date.valueOf("2013-12-05"), "abcd@gmail.com", 2 );
         Student GetFromDb = new Student();
         GetFromDb = (Student) User.Login("000000000", "123456");
         Assert.assertEquals(student, GetFromDb);

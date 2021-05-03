@@ -34,9 +34,10 @@ class UserTest {
             stmt.setString(6, "abc@gmail.com");
             stmt.execute();
 
-            query = "INSERT INTO student Values(?)";
+            query = "INSERT INTO student Values(?,?)";
             stmt = con.prepareCall(query);
             stmt.setString(1, "000000000");
+            stmt.setInt(2, 1);
             stmt.execute();
 
             query = "INSERT INTO users Values(?,?,?,?,?,?)";
@@ -55,10 +56,6 @@ class UserTest {
             stmt.setString(1,"111111111");
             stmt.execute();
 
-            query = "INSERT INTO student Values(?)";
-            stmt = con.prepareCall(query);
-            stmt.setString(1, "111111111");
-            stmt.execute();
 
 
             con.close();

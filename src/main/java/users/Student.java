@@ -12,16 +12,18 @@ Student class
  */
 public class Student extends User {
 
+    int grade;
 
     public Student() {
     }
 
-    public Student(String StudentsID, String password, String lname, String fname, Date birth_date, String email){
+    public Student(String StudentsID, String password, String lname, String fname, Date birth_date, String email, int grade){
         super(StudentsID, password, lname, fname, birth_date, email);
+        this.grade = grade;
     }
 
     public void SignUp(String Id, String Password, String FirstName, String LastName, Date BirthDate,
-                       String email) {
+                       String email,int grade) {
         Connection con = ZeroDawnDatabase.GetDbCon();
         if (con == null) {
             System.exit(1);
@@ -46,9 +48,11 @@ public class Student extends User {
 
             stmt.execute();
 
-            query = "INSERT INTO student Values(?)";
+            query = "INSERT INTO student Values(?,?)";
             stmt = con.prepareCall(query);
             stmt.setString(1, Id);
+            this.grade = grade;
+            stmt.setInt(2, grade);
             stmt.execute();
             con.close();
 

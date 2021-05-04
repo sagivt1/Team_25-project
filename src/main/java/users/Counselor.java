@@ -66,27 +66,11 @@ public class Counselor extends users.User {
     public void RemoveOrHaltQuiz(){
 
         Scanner in = new Scanner(System.in);
-        Connection con = ZeroDawnDatabase.GetDbCon();
-        if (con == null) {
-            System.exit(1);
-        }
 
-        ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();
 
-        try{
-            String query = "select test_id, is_active, test_name from test;";
-            PreparedStatement stmt = con.prepareCall(query);
-            boolean HadResult = stmt.execute();
-            if(HadResult){
-                ResultSet res = stmt.getResultSet();
-                while(res.next()){
-                    Quizzes.add(new Quiz(res.getInt(1), res.getBoolean(2), res.getString(3)));
-                }
-            }
-            con.close();
-        }catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
+
+
 
         System.out.println("----List Of Tests----");
         for(Quiz quiz : Quizzes){

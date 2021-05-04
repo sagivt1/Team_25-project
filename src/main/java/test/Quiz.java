@@ -64,14 +64,14 @@ public class Quiz {
     public Quiz(int id, boolean isActive, int grade) {
         this.Id = id;
         Questions = new ArrayList<Question>();
-        isActive = true;
+        this.isActive = isActive;
         this.grade = grade;
     }
 
     public Quiz(int id, boolean isActive, String name) {
         this.Name = name;
         this.Id = id;
-        isActive = true;
+        this.isActive = isActive;
     }
 
     public Quiz(String name) {
@@ -273,6 +273,34 @@ public class Quiz {
         }catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static ArrayList<Quiz> GetQuizList(){
+
+        ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+
+        try{
+            String query = "select test_id, is_active, test_name from test;";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    Quizzes.add(new Quiz(res.getInt(1), res.getBoolean(2), res.getString(3)));
+                }
+            }
+            con.close();
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return Quizzes;
+
     }
 
 

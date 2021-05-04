@@ -100,7 +100,7 @@ public class Counselor extends users.User {
         while(true) {
             switch (choice) {
                 case 1:
-                    quiz.RemoveSpecificQuiz();
+                    quiz.RemoveThisQuiz();
                     return;
                 case 2:
                     quiz.UpdateIsActive();

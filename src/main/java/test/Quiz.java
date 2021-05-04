@@ -236,7 +236,7 @@ public class Quiz {
 
     }
 
-    public void RemoveSpecificQuiz()
+    public void RemoveThisQuiz()
     {
 
         Connection con = ZeroDawnDatabase.GetDbCon();

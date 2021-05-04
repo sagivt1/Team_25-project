@@ -290,7 +290,7 @@ public class MainPage {
                     //Edit test function
                     break;
                 case "3":
-                    //Remove/Inactive test function
+                    counselor.RemoveOrHaltQuiz();
                     break;
                 case "4":
                     //marked student function

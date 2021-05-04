@@ -59,7 +59,6 @@ public class Quiz {
 
     public Quiz() {
         Questions = new ArrayList<Question>();
-        isActive = true;
     }
 
     public Quiz(int id, boolean isActive, int grade) {
@@ -67,6 +66,12 @@ public class Quiz {
         Questions = new ArrayList<Question>();
         isActive = true;
         this.grade = grade;
+    }
+
+    public Quiz(int id, boolean isActive, String name) {
+        this.Name = name;
+        this.Id = id;
+        isActive = true;
     }
 
     public Quiz(String name) {
@@ -158,6 +163,7 @@ public class Quiz {
                 stmt.setString(2, String.valueOf(quest.question));
                 stmt.execute();
             }
+            con.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -198,9 +204,14 @@ public class Quiz {
                     ));
                 }
             }
-
+            con.close();
         }catch (SQLException throwables) {
-            throwables.printStackTrace();
+            if(throwables.getErrorCode() == 0){
+                this.Id = 0;
+            }
+            else{
+                throwables.printStackTrace();
+            }
         }
 
     }
@@ -218,10 +229,50 @@ public class Quiz {
             PreparedStatement stmt = con.prepareCall(query);
             stmt.setString(1, String.valueOf(id));
             stmt.execute();
+            con.close();
         }catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
+    }
+
+    public void RemoveSpecificQuiz()
+    {
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "delete from test where test_id = ?;";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setString(1, String.valueOf(this.getId()));
+            stmt.execute();
+            con.close();
+        }catch (SQLException throwables) {
+
+            throwables.printStackTrace();
+        }
+
+
+    }
+
+    public void UpdateIsActive(){
+        Connection con = ZeroDawnDatabase.GetDbCon();
+
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "update test set is_active = 0 where test_id = ?;";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setString(1, String.valueOf(this.getId()));
+            stmt.execute();
+            con.close();
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 

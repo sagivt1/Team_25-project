@@ -336,7 +336,7 @@ public class MainPage {
                     parent.AddChild();
                     break;
                 case "3":
-
+                    parent.RemoveChild();
                     break;
                 case "4":
                     parent = null;

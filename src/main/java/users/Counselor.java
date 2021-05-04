@@ -90,7 +90,8 @@ public class Counselor extends users.User {
 
         System.out.println("----List Of Tests----");
         for(Quiz quiz : Quizzes){
-            System.out.println(quiz.getId() + ". " + quiz.getName());
+            if(quiz.isActive())
+                System.out.println(quiz.getId() + ". " + quiz.getName());
         }
 
         int choice;

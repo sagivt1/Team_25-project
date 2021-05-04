@@ -94,7 +94,7 @@ public class Parent extends User {
             System.exit(1);
         }
         try {
-            String query = "INSERT INTO kids Values(?,?)";
+            String query = "INSERT INTO kids Values(?,?)";// need to check new DB
             PreparedStatement stmt = con.prepareCall(query);
             stmt.setString(1, pId);
             stmt.setString(2, cId);

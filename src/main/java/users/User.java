@@ -125,6 +125,7 @@ public class User {
                             res.getString("email")
                     );
                     res.close();
+                    con.close();
                     return parent;
                 }
                 res.close();

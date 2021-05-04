@@ -1,9 +1,12 @@
+import Database.ZeroDawnDatabase;
 import users.Counselor;
 import users.Parent;
 import users.Student;
 import users.User;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -85,6 +88,7 @@ public class MainPage {
             if (ID.length() == 9 && m.matches()) {
                 break;
             }
+            //add check if id is already in the system
             else {
                 System.out.println("you didn't insert an ID, please try again..");
             }
@@ -318,7 +322,9 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         String Opt;
         System.out.println("1.Edit profile");
-        System.out.println("2.Exit");
+        System.out.println("2.Add child");
+        System.out.println("3.Remove child");
+        System.out.println("4.Exit");
         Opt = scanM.next();
 
         while(true) {
@@ -327,6 +333,12 @@ public class MainPage {
                     Edit(parent);
                     break;
                 case "2":
+                    parent.AddChild();
+                    break;
+                case "3":
+
+                    break;
+                case "4":
                     parent = null;
                     return;
                 default:

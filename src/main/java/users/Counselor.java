@@ -71,7 +71,6 @@ public class Counselor extends users.User {
         ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
 
 
-
         System.out.println("----List Of Tests----");
         for(Quiz quiz : Quizzes){
             if(quiz.isActive())

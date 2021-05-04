@@ -163,6 +163,7 @@ public class Quiz {
                 stmt.setString(2, String.valueOf(quest.question));
                 stmt.execute();
             }
+            res.close();
             con.close();
 
         } catch (SQLException throwables) {
@@ -203,7 +204,9 @@ public class Quiz {
                         res.getInt(1), res.getString(3), res.getInt(2)
                     ));
                 }
+                res.close();
             }
+
             con.close();
         }catch (SQLException throwables) {
             if(throwables.getErrorCode() == 0){
@@ -293,6 +296,7 @@ public class Quiz {
                 while(res.next()){
                     Quizzes.add(new Quiz(res.getInt(1), res.getBoolean(2), res.getString(3)));
                 }
+                res.close();
             }
             con.close();
         }catch (SQLException throwables) {

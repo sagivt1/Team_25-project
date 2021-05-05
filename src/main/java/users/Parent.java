@@ -143,12 +143,9 @@ public class Parent extends User {
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {
                 New_Kids.add(res.getString("student_id"));
-                //System.out.println("kids are:   " + res.getString("student_id"));
             }
             res.close();
             con.close();
-            System.out.println("the student array is this long: " + New_Kids.size());
-            System.out.println("the kids id is: " + New_Kids);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -168,25 +165,27 @@ public class Parent extends User {
         }
     }
 
+    public void DeleteChildFromArray(int Index) {
+
+    }
+
     public void RemoveChild() {
         AddKidsToArray();
         System.out.println("Choose a kid from the list to remove");
         int i;
-        int j = 0;
-        String cId = "15"; //need to get all child id time after time from DB
-        for (i = 1; i <= j; i++) { //loop to print all the children id's
-            System.out.println(i + ". ID: " + cId);
+        for (i = 0; i < New_Kids.size(); i++) {
+            System.out.println(i+1 + ". ID: " + New_Kids.get(i));
         }
         Scanner scanM = new Scanner(System.in);
         int Opt = scanM.nextInt();
-        while (Opt < 1  && Opt > j)
+        while (Opt < 1  && Opt > New_Kids.size())
         {
             System.out.print("Wrong Input, try again: ");
             Opt = scanM.nextInt();
         }
-        // need to get id from DB with Opt
-        String ChoosenChildID = "child";
-        DeleteChild(getUserID(), ChoosenChildID);
 
+
+        //DeleteChild(getUserID(), New_Kids.get(Opt-1));
+        //DeleteChildFromArray(Opt-1);
     }
 }

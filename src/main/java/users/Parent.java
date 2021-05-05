@@ -98,15 +98,10 @@ public class Parent extends User {
             PreparedStatement stmt = con.prepareCall(query);
             stmt.setString(1, pId);
             stmt.setString(2, cId);
-            boolean HadResult = stmt.execute();
-            if (HadResult) {
-                ResultSet res = stmt.getResultSet();
-                if (res.next()) {
-                    res.close();
-                    con.close();
-                }
-            }
+            stmt.execute();
+            System.out.println("stmt execute");
             con.close();
+            System.out.println("con closed");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

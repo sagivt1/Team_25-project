@@ -345,6 +345,42 @@ public class Quiz {
 
     }
 
+    public void EditQuestions(){
+
+        Scanner in = new Scanner(System.in);
+        System.out.println("Select Question to Edit");
+        int i = 1;
+        for(Question Quest : this.Questions){
+            System.out.println(i + ". " +Quest.question);
+            i++;
+        }
+
+        int choice;
+        System.out.println("Please choice question to edit");
+        choice = in.nextInt();
+        while(choice < 1 || choice > i){
+            System.out.println("Invalid choice please try again");
+            choice = in.nextInt();
+        }
+        in.nextLine();
+        String confirm, NewQuestion;
+        do{
+            System.out.println("Enter New Question");
+            NewQuestion = in.nextLine();
+            System.out.println("Press Y to confirm");
+            confirm = in.nextLine();
+            confirm = confirm.toLowerCase();
+        }while(!confirm.equals("y"));
+
+
+        Questions.get(choice-1).EditQuestion(NewQuestion);
+
+
+
+
+
+    }
+
 
 
 

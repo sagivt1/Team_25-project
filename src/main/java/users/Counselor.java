@@ -60,7 +60,7 @@ public class Counselor extends users.User {
 
     public void AddNewTest(){
         Quiz test = new Quiz();
-        test.AddNewQuizToDB();
+        test.InitNewQuiz();
     }
 
     public void RemoveOrHaltQuiz(){
@@ -158,6 +158,7 @@ public class Counselor extends users.User {
                     quiz.EditName(NewName);
                     break;
                 case "2" :
+                    quiz.EditQuestions();
                     break;
                 case "3":
                     return;

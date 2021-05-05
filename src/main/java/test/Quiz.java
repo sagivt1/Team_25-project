@@ -295,6 +295,27 @@ public class Quiz {
         }
     }
 
+    public void EditName(String NewName){
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "update test set test_name = ? where test_id = ?;";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setString(1, NewName);
+            stmt.setString(2, String.valueOf(this.getId()));
+            stmt.execute();
+            con.close();
+            this.Name = NewName;
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
     public static ArrayList<Quiz> GetQuizList(){
 
         ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();

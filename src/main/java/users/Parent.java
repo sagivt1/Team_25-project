@@ -99,9 +99,7 @@ public class Parent extends User {
             stmt.setString(1, pId);
             stmt.setString(2, cId);
             stmt.execute();
-            System.out.println("stmt execute");
             con.close();
-            System.out.println("con closed");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -117,8 +115,8 @@ public class Parent extends User {
         if (cId.length() == 9 && m.matches()) {
             boolean check1 = CheckIfStudent(cId);
             if (check1){
-                //System.out.println(check1 + " this is student");
                 AddMyChild(getUserID(), cId);
+                System.out.println("child was added\n");
             }
             else {
                 System.out.println(cId + " this isn't a student ID, please try again..");

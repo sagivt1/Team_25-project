@@ -321,13 +321,12 @@ public class MainPage {
     public static void ParentMenu(Parent parent) {
         Scanner scanM = new Scanner(System.in);
         String Opt;
-        System.out.println("1.Edit profile");
-        System.out.println("2.Add child");
-        System.out.println("3.Remove child");
-        System.out.println("4.Exit");
-        Opt = scanM.next();
-
         while(true) {
+            System.out.println("1.Edit profile");
+            System.out.println("2.Add child");
+            System.out.println("3.Remove child");
+            System.out.println("4.Exit");
+            Opt = scanM.next();
             switch (Opt) {
                 case "1":
                     Edit(parent);

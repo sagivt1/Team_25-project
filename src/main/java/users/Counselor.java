@@ -66,10 +66,7 @@ public class Counselor extends users.User {
     public void RemoveOrHaltQuiz(){
 
         Scanner in = new Scanner(System.in);
-
-
         ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
-
 
         System.out.println("----List Of Tests----");
         for(Quiz quiz : Quizzes){
@@ -95,7 +92,6 @@ public class Counselor extends users.User {
 
         choice = in.nextInt();
 
-
         while(true) {
             switch (choice) {
                 case 1:
@@ -111,7 +107,18 @@ public class Counselor extends users.User {
             }
         }
 
+    }
 
+    public void EditTest(){
+
+        Scanner in = new Scanner(System.in);
+        ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
+
+        System.out.println("----List Of Tests----");
+        for(Quiz quiz : Quizzes){
+            if(quiz.isActive())
+                System.out.println(quiz.getId() + ". " + quiz.getName());
+        }
 
 
 

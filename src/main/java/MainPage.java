@@ -291,7 +291,7 @@ public class MainPage {
                     counselor.AddNewTest();
                     break;
                 case "2":
-                    //Edit test function
+                    counselor.EditTest();
                     break;
                 case "3":
                     counselor.RemoveOrHaltQuiz();

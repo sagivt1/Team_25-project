@@ -126,4 +126,39 @@ public class Parent extends User {
             System.out.println("you didn't insert an ID, please try again..");
         }
     }
+
+    public void DeleteChild(String pId, String cId) {
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        try {
+            //need to think how to delete the child
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void RemoveChild() {
+        System.out.println("Choose a kid from the list to remove");
+        int i;
+        int j = 0;
+        String cId = "15"; //need to get all child id time after time from DB
+        for (i = 1; i <= j; i++) { //loop to print all the children id's
+            System.out.println(i + ". ID: " + cId);
+        }
+        Scanner scanM = new Scanner(System.in);
+        int Opt = scanM.nextInt();
+        while (Opt < 1  && Opt > j)
+        {
+            System.out.print("Wrong Input, try again: ");
+            Opt = scanM.nextInt();
+        }
+        // need to get id from DB with Opt
+        String ChoosenChildID = "child";
+        DeleteChild(getUserID(), ChoosenChildID);
+        
+    }
 }

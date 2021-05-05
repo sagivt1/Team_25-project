@@ -59,14 +59,19 @@ public class Quiz {
 
     public Quiz() {
         Questions = new ArrayList<Question>();
-        isActive = true;
     }
 
     public Quiz(int id, boolean isActive, int grade) {
         this.Id = id;
         Questions = new ArrayList<Question>();
-        isActive = true;
+        this.isActive = isActive;
         this.grade = grade;
+    }
+
+    public Quiz(int id, boolean isActive, String name) {
+        this.Name = name;
+        this.Id = id;
+        this.isActive = isActive;
     }
 
     public Quiz(String name) {
@@ -121,6 +126,9 @@ public class Quiz {
 
     }
 
+    /**
+     * Adding new Quiz to the database
+     */
     public void AddNewQuizToDB()
     {
         Connection con = ZeroDawnDatabase.GetDbCon();
@@ -158,12 +166,18 @@ public class Quiz {
                 stmt.setString(2, String.valueOf(quest.question));
                 stmt.execute();
             }
+            res.close();
+            con.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
+    /**
+     * Get specific quiz from the database by quiz id
+     * @param id
+     */
     public void GetSpecificQuizFromDB(int id)
     {
         Connection con = ZeroDawnDatabase.GetDbCon();
@@ -197,15 +211,26 @@ public class Quiz {
                         res.getInt(1), res.getString(3), res.getInt(2)
                     ));
                 }
+                res.close();
             }
 
+            con.close();
         }catch (SQLException throwables) {
-            throwables.printStackTrace();
+            if(throwables.getErrorCode() == 0){
+                this.Id = 0;
+            }
+            else{
+                throwables.printStackTrace();
+            }
         }
 
     }
 
-    public void RemoveSpecificQuiz(int id)
+    /**
+     * Remove specific quiz from the database
+     * @param id
+     */
+    public static void RemoveSpecificQuiz(int id)
     {
 
         Connection con = ZeroDawnDatabase.GetDbCon();
@@ -218,9 +243,84 @@ public class Quiz {
             PreparedStatement stmt = con.prepareCall(query);
             stmt.setString(1, String.valueOf(id));
             stmt.execute();
+            con.close();
         }catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+    }
+
+    /**
+     * Remove This quiz from the database
+     */
+    public void RemoveThisQuiz()
+    {
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "delete from test where test_id = ?;";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setString(1, String.valueOf(this.getId()));
+            stmt.execute();
+            con.close();
+        }catch (SQLException throwables) {
+
+            throwables.printStackTrace();
+        }
+
+
+    }
+
+    /**
+     * Update this isActive to false in the database
+     */
+    public void UpdateIsActive(){
+        Connection con = ZeroDawnDatabase.GetDbCon();
+
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "update test set is_active = 0 where test_id = ?;";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setString(1, String.valueOf(this.getId()));
+            stmt.execute();
+            con.close();
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public static ArrayList<Quiz> GetQuizList(){
+
+        ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+
+        try{
+            String query = "select test_id, is_active, test_name from test;";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    Quizzes.add(new Quiz(res.getInt(1), res.getBoolean(2), res.getString(3)));
+                }
+                res.close();
+            }
+            con.close();
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return Quizzes;
 
     }
 

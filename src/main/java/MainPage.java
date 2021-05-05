@@ -294,7 +294,7 @@ public class MainPage {
                     //Edit test function
                     break;
                 case "3":
-                    //Remove/Inactive test function
+                    counselor.RemoveOrHaltQuiz();
                     break;
                 case "4":
                     //marked student function
@@ -335,7 +335,7 @@ public class MainPage {
                     parent.AddChild();
                     break;
                 case "3":
-
+                    parent.RemoveChild();
                     break;
                 case "4":
                     parent = null;

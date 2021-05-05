@@ -43,6 +43,30 @@ class TestQuiz {
         Assert.assertEquals(test.getGrade(),quiz.getGrade());
         Assert.assertEquals(test.getName(),quiz.getName());
         Assert.assertEquals(test.getQuestions().get(0).getQuestion(),quiz.getQuestions().get(0).getQuestion());
-
     }
+
+    @Test
+    public void RemoveThisQuiz() {
+        quiz.RemoveThisQuiz();
+        Quiz test = new Quiz();
+        test.GetSpecificQuizFromDB(quiz.getId());
+        Assert.assertEquals(test.getId(), 0);
+    }
+
+    @Test
+    public void RemoveSpecificQuiz(){
+        quiz.RemoveSpecificQuiz(quiz.getId());
+        Quiz test = new Quiz();
+        test.GetSpecificQuizFromDB(quiz.getId());
+        Assert.assertEquals(test.getId(), 0);
+    }
+
+    @Test
+    public void UpdateIsActive(){
+        quiz.UpdateIsActive();
+        Quiz test = new Quiz();
+        test.GetSpecificQuizFromDB(quiz.getId());
+        Assert.assertFalse(test.isActive());
+    }
+
 }

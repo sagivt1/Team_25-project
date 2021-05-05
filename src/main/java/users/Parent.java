@@ -12,19 +12,23 @@ import java.util.regex.Pattern;
 
 public class Parent extends User {
     ArrayList<Student> Kids;
+    ArrayList<String> New_Kids;
 
     public Parent() {
         Kids = new ArrayList<Student>();
+        New_Kids = new ArrayList<String>();
     }
 
     public Parent(String ParentID, String password, String lname, String fname, Date birth_date, String email){
         super(ParentID,password, lname, fname,  birth_date, email);
         Kids = new ArrayList<Student>();
+        New_Kids = new ArrayList<String>();
     }
 
     public void SignUp(String Id, String Password, String FirstName, String LastName, Date BirthDate,
                        String email){
         Kids = new ArrayList<Student>();
+        New_Kids = new ArrayList<String>();
         Connection con = ZeroDawnDatabase.GetDbCon();
         if(con == null)
         {
@@ -127,6 +131,29 @@ public class Parent extends User {
         }
     }
 
+    public void AddKidsToArray() {
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        try {
+            String query = "SELECT student_id FROM kids WHERE parent_id = " + getUserID();
+            PreparedStatement stmt = con.prepareCall(query);
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                New_Kids.add(res.getString("student_id"));
+                //System.out.println("kids are:   " + res.getString("student_id"));
+            }
+            res.close();
+            con.close();
+            System.out.println("the student array is this long: " + New_Kids.size());
+            System.out.println("the kids id is: " + New_Kids);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public void DeleteChild(String pId, String cId) {
         Connection con = ZeroDawnDatabase.GetDbCon();
         if(con == null)
@@ -142,6 +169,7 @@ public class Parent extends User {
     }
 
     public void RemoveChild() {
+        AddKidsToArray();
         System.out.println("Choose a kid from the list to remove");
         int i;
         int j = 0;
@@ -159,6 +187,6 @@ public class Parent extends User {
         // need to get id from DB with Opt
         String ChoosenChildID = "child";
         DeleteChild(getUserID(), ChoosenChildID);
-        
+
     }
 }

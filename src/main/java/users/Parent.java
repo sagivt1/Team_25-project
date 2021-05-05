@@ -94,18 +94,11 @@ public class Parent extends User {
             System.exit(1);
         }
         try {
-            String query = "INSERT INTO kids Values(?,?)";
+            String query = "INSERT INTO kids Values(?,?)";// need to check new DB
             PreparedStatement stmt = con.prepareCall(query);
             stmt.setString(1, pId);
             stmt.setString(2, cId);
-            boolean HadResult = stmt.execute();
-            if (HadResult) {
-                ResultSet res = stmt.getResultSet();
-                if (res.next()) {
-                    res.close();
-                    con.close();
-                }
-            }
+            stmt.execute();
             con.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -123,7 +116,7 @@ public class Parent extends User {
             boolean check1 = CheckIfStudent(cId);
             if (check1){
                 AddMyChild(getUserID(), cId);
-                //how to finish this function?? i think i'm done (:
+                System.out.println("child was added\n");
             }
             else {
                 System.out.println(cId + " this isn't a student ID, please try again..");

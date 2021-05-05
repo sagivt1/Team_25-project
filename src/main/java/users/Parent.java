@@ -23,12 +23,11 @@ public class Parent extends User {
         super(ParentID,password, lname, fname,  birth_date, email);
         Kids = new ArrayList<Student>();
         New_Kids = new ArrayList<String>();
+        AddKidsToArray();
     }
 
     public void SignUp(String Id, String Password, String FirstName, String LastName, Date BirthDate,
                        String email){
-        Kids = new ArrayList<Student>();
-        New_Kids = new ArrayList<String>();
         Connection con = ZeroDawnDatabase.GetDbCon();
         if(con == null)
         {
@@ -151,14 +150,16 @@ public class Parent extends User {
         }
     }
 
-    public void DeleteChild(String pId, String cId) {
+    public void DeleteChildFromDB(String pId, String cId) {
         Connection con = ZeroDawnDatabase.GetDbCon();
         if(con == null)
         {
             System.exit(1);
         }
         try {
-            //need to think how to delete the child
+            String query = "DELETE FROM kids WHERE parent_id = " + pId + " AND student_id = " + cId;
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.executeUpdate(query);
             con.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -166,7 +167,26 @@ public class Parent extends User {
     }
 
     public void DeleteChildFromArray(int Index) {
-
+        System.out.println("\n we have aravied to delete from array function\n");
+        ArrayList<String> temp_Kids = new ArrayList<String>();
+        int j = 0;
+        System.out.println("\n\noriginal array check before delete:...\n" + New_Kids);
+        for (int i = 0; i < New_Kids.size(); i++) {
+            if (i == Index) {
+                i++;
+            }
+            else {
+                temp_Kids.add(j, New_Kids.get(i));
+                j++;
+            }
+        }
+        System.out.println("\n\ntemp array check after insertation:...\n" + temp_Kids);
+        New_Kids.clear();
+        System.out.println("\n\noriginal array check before insertation:...\n" + New_Kids);
+        for (j = 0; j < temp_Kids.size(); j++) {
+            New_Kids.add(j, temp_Kids.get(j));
+        }
+        System.out.println("\n\noriginal array check after insertation:...\n" + New_Kids);
     }
 
     public void RemoveChild() {
@@ -174,7 +194,7 @@ public class Parent extends User {
         System.out.println("Choose a kid from the list to remove");
         int i;
         for (i = 0; i < New_Kids.size(); i++) {
-            System.out.println(i+1 + ". ID: " + New_Kids.get(i));
+            System.out.println(i+1 + ".ID: " + New_Kids.get(i));
         }
         Scanner scanM = new Scanner(System.in);
         int Opt = scanM.nextInt();
@@ -183,9 +203,8 @@ public class Parent extends User {
             System.out.print("Wrong Input, try again: ");
             Opt = scanM.nextInt();
         }
-
-
-        //DeleteChild(getUserID(), New_Kids.get(Opt-1));
+        DeleteChildFromDB(getUserID(), New_Kids.get(Opt-1));
         //DeleteChildFromArray(Opt-1);
+        System.out.println("child was deleted\n");
     }
 }

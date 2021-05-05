@@ -35,7 +35,7 @@ public class MainPage {
                 System.out.print("Wrong Input, try again: ");
                 mSelect = scanM.nextInt();
             }
-
+            System.out.print(newLine);
             if (mSelect == 1) {
                 user = sign_up();
                 if(user != null) {
@@ -254,7 +254,7 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
-            System.out.println("1.Edit profile");
+            System.out.println("\n1.Edit profile");
             System.out.println("2.Exit");
             Opt = scanM.next();
 
@@ -277,7 +277,7 @@ public class MainPage {
         String Opt;
 
         while(true) {
-            System.out.println("1.Add new test");
+            System.out.println("\n1.Add new test");
             System.out.println("2.Edit test");
             System.out.println("3.Remove/Inactive test");
             System.out.println("4.Present Potential marked students");
@@ -322,7 +322,7 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
-            System.out.println("1.Edit profile");
+            System.out.println("\n1.Edit profile");
             System.out.println("2.Add child");
             System.out.println("3.Remove child");
             System.out.println("4.Exit");
@@ -350,7 +350,7 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         int Opt;
         while (true) {
-            System.out.println("1.Edit password");
+            System.out.println("\n1.Edit password");
             System.out.println("2.Edit first name");
             System.out.println("3.Edit last name");
             System.out.println("4.Edit email");

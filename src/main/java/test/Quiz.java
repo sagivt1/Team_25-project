@@ -126,6 +126,9 @@ public class Quiz {
 
     }
 
+    /**
+     * Adding new Quiz to the database
+     */
     public void AddNewQuizToDB()
     {
         Connection con = ZeroDawnDatabase.GetDbCon();
@@ -171,6 +174,10 @@ public class Quiz {
         }
     }
 
+    /**
+     * Get specific quiz from the database by quiz id
+     * @param id
+     */
     public void GetSpecificQuizFromDB(int id)
     {
         Connection con = ZeroDawnDatabase.GetDbCon();
@@ -219,7 +226,11 @@ public class Quiz {
 
     }
 
-    public void RemoveSpecificQuiz(int id)
+    /**
+     * Remove specific quiz from the database
+     * @param id
+     */
+    public static void RemoveSpecificQuiz(int id)
     {
 
         Connection con = ZeroDawnDatabase.GetDbCon();
@@ -239,6 +250,9 @@ public class Quiz {
 
     }
 
+    /**
+     * Remove This quiz from the database
+     */
     public void RemoveThisQuiz()
     {
 
@@ -261,6 +275,9 @@ public class Quiz {
 
     }
 
+    /**
+     * Update this isActive to false in the database
+     */
     public void UpdateIsActive(){
         Connection con = ZeroDawnDatabase.GetDbCon();
 

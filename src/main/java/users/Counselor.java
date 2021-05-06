@@ -92,7 +92,6 @@ public class Counselor extends users.User {
         System.out.println("1.Remove Test");
         System.out.println("2.Inactive Test");
         System.out.println("3.Exit without change");
-
         choice = in.nextInt();
 
 
@@ -116,9 +115,6 @@ public class Counselor extends users.User {
 
 
     }
-
-
-
 
 
 

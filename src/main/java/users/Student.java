@@ -1,29 +1,29 @@
 package users;
 
 import Database.ZeroDawnDatabase;
+import test.Question;
+import test.Quiz;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /*
 Student class
  */
 public class Student extends User {
-
     int grade;
 
     public Student() {
     }
 
-    public Student(String StudentsID, String password, String lname, String fname, Date birth_date, String email, int grade){
+    public Student(String StudentsID, String password, String lname, String fname, Date birth_date, String email, int grade) {
         super(StudentsID, password, lname, fname, birth_date, email);
         this.grade = grade;
     }
 
     public void SignUp(String Id, String Password, String FirstName, String LastName, Date BirthDate,
-                       String email,int grade) {
+                       String email, int grade) {
         Connection con = ZeroDawnDatabase.GetDbCon();
         if (con == null) {
             System.exit(1);
@@ -62,7 +62,149 @@ public class Student extends User {
     }
 
 
+    public static void start_test1(String ans[][]){
+        Scanner in = new Scanner(System.in);
+        Quiz quiz = new Quiz();
+        quiz.GetSpecificQuizFromDB(Integer.parseInt(ans[0][0]));
+        for (int i = 0; i < quiz.getQuestions().size(); i++) {
+            String quiz_id=ans[i][0];
+            String UserID = ans[i][1];
+            String Q_id = ans[i][2];
+            String ansr = ans[i][3];
+            Connection con = ZeroDawnDatabase.GetDbCon();
+            if (con == null) {
+                System.exit(1);
+            }
+            try {
+                String query = "INSERT INTO start_test(test_id,user_id,question_id,ans) Values(?,?,?,?)";
+                PreparedStatement stmt = con.prepareCall(query);
+                stmt.setString(1, String.valueOf(quiz_id));
+                stmt.setString(2, UserID);
+                stmt.setString(3,Q_id);
+                stmt.setInt(4, Integer.parseInt(ansr));
+                stmt.execute();
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+
+
+    public static String[][] start_test(){
+        String[][] AnswersCntainer = new String[10][5];
+        Scanner in = new Scanner(System.in);
+        int CH;
+        System.out.println("---------------Welcome---------------");
+        System.out.println("to start a new test Press 1");
+        System.out.println("to exit Press 0");
+        CH = in.nextInt();
+        while (CH != 0 && CH != 1) {
+                System.out.println("You have selected a wrong number, please select again:");
+                CH = in.nextInt();
+                System.out.println("to start a test Press 1");
+                System.out.println("to exit Press 0");
+            }
+        if (CH == 1) {
+            ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
+            System.out.println("----List Of Tests----");
+            for (Quiz quiz : Quizzes) {
+                if (quiz.isActive())
+                    System.out.println(quiz.getId() + ". " + quiz.getName());
+            }
+            int choice;
+            System.out.println("Choose test:");
+            choice = in.nextInt();
+            Quiz quiz = new Quiz();
+            quiz.GetSpecificQuizFromDB(choice);
+            if (quiz.getId() == 0) {
+                System.out.println("Invalid Test ID");
+                return AnswersCntainer;
+            }
+
+
+            int a = 1;
+            for (int i = 0; i < quiz.getQuestions().size(); i++) {
+                int Q_id = quiz.getQuestions().get(i).getId();
+                String Q = quiz.getQuestions().get(i).getQuestion();
+                int quiz_id = quiz.getId();
+                AnswersCntainer[i][0] = String.valueOf(quiz_id);
+                AnswersCntainer[i][1] = String.valueOf(UserID);
+                AnswersCntainer[i][2] = String.valueOf(Q_id);
+                System.out.println("Q number " + a + " : ");
+                System.out.println(Q);
+                System.out.println("Please select an answer: ");
+                System.out.println("1. is a ");
+                System.out.println("2. as a ");
+                System.out.println("3. dont know");
+                System.out.println("4. all");
+                int Ans = in.nextInt();
+                while(Ans!=1 && Ans!=2 && Ans!=3 && Ans!=4)
+                {
+                    System.out.println("You have selected a wrong number, please select again:");
+                    System.out.println("Q number " + a + " : ");
+                    System.out.println(Q);
+                    System.out.println("Please select an answer: ");
+                    System.out.println("1. is a ");
+                    System.out.println("2. as a ");
+                    System.out.println("3. dont know");
+                    System.out.println("4. all");
+                    Ans = in.nextInt();
+                }
+                AnswersCntainer[i][3] = String.valueOf(Ans);
+                AnswersCntainer[i][4] = Q;
+                int flag=1;
+                int temp_choice=0;
+                while (flag==1) {
+                    System.out.println("if you want to update your last answer press 1");
+                    System.out.println("if you want to continue to the next Question press 2");
+                    temp_choice = in.nextInt();
+                    if(temp_choice==1 || temp_choice==2){
+                        flag=0;
+                    }
+
+                }
+                if(temp_choice==1){
+                    while(Ans!=1 && Ans!=2 && Ans!=3 && Ans!=4) {
+                        System.out.println("You have selected a wrong number, please select again:");
+                        System.out.println("Q number " + a + " : ");
+                        System.out.println(Q);
+                        System.out.println("Please select an answer: ");
+                        System.out.println("1. is a ");
+                        System.out.println("2. as a ");
+                        System.out.println("3. dont know");
+                        System.out.println("4. all");
+                        Ans = in.nextInt();
+                        AnswersCntainer[i][3] = String.valueOf(Ans);
+                    }
+                }
+                a++;
+                if(i+1==quiz.getQuestions().size())
+                {
+                    System.out.println("You have completed the quiz ");
+                }
+            }
+            return AnswersCntainer;
+
+        }
+
+        else{
+            return AnswersCntainer;
+                }
+    }
+
+
+    public static void start_test2()
+    {
+        start_test1(start_test());
+    }
+
 
 }
+
+
+
+
 
 

@@ -11,7 +11,7 @@ User basic class
 public class User {
 
 
-    protected String UserID;
+    protected static String UserID;
     protected String password;
     protected String lname;
     protected String fname;

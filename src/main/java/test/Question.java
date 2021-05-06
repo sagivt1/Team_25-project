@@ -76,9 +76,8 @@ public class Question {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+        
         this.question = NewQuestion;
-        System.out.println("Question Has Been Update");
     }
 
 }

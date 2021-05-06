@@ -165,6 +165,17 @@ public class Quiz {
                 stmt.setString(1, String.valueOf(Id));
                 stmt.setString(2, String.valueOf(quest.question));
                 stmt.execute();
+
+                query = "SELECT LAST_INSERT_ID();" ;
+                stmt = con.prepareCall(query);
+                HadResult = stmt.execute();
+                if(!HadResult){
+                    System.exit(1);
+                }
+                res = stmt.getResultSet();
+                res.next();
+                int TempId = res.getInt(1);
+                quest.setId(TempId);
             }
             res.close();
             con.close();
@@ -372,13 +383,8 @@ public class Quiz {
             confirm = confirm.toLowerCase();
         }while(!confirm.equals("y"));
 
-
         Questions.get(choice-1).EditQuestion(NewQuestion);
-
-
-
-
-
+        System.out.println("Question Has Been Update");
     }
 
 

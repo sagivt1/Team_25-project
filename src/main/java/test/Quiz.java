@@ -165,6 +165,17 @@ public class Quiz {
                 stmt.setString(1, String.valueOf(Id));
                 stmt.setString(2, String.valueOf(quest.question));
                 stmt.execute();
+
+                query = "SELECT LAST_INSERT_ID();" ;
+                stmt = con.prepareCall(query);
+                HadResult = stmt.execute();
+                if(!HadResult){
+                    System.exit(1);
+                }
+                res = stmt.getResultSet();
+                res.next();
+                int TempId = res.getInt(1);
+                quest.setId(TempId);
             }
             res.close();
             con.close();
@@ -295,6 +306,27 @@ public class Quiz {
         }
     }
 
+    public void EditName(String NewName){
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "update test set test_name = ? where test_id = ?;";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setString(1, NewName);
+            stmt.setString(2, String.valueOf(this.getId()));
+            stmt.execute();
+            con.close();
+            this.Name = NewName;
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
     public static ArrayList<Quiz> GetQuizList(){
 
         ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();
@@ -322,6 +354,37 @@ public class Quiz {
 
         return Quizzes;
 
+    }
+
+    public void EditQuestions(){
+
+        Scanner in = new Scanner(System.in);
+        System.out.println("Select Question to Edit");
+        int i = 1;
+        for(Question Quest : this.Questions){
+            System.out.println(i + ". " +Quest.question);
+            i++;
+        }
+
+        int choice;
+        System.out.println("Please choice question to edit");
+        choice = in.nextInt();
+        while(choice < 1 || choice > i){
+            System.out.println("Invalid choice please try again");
+            choice = in.nextInt();
+        }
+        in.nextLine();
+        String confirm, NewQuestion;
+        do{
+            System.out.println("Enter New Question");
+            NewQuestion = in.nextLine();
+            System.out.println("Press Y to confirm");
+            confirm = in.nextLine();
+            confirm = confirm.toLowerCase();
+        }while(!confirm.equals("y"));
+
+        Questions.get(choice-1).EditQuestion(NewQuestion);
+        System.out.println("Question Has Been Update");
     }
 
 

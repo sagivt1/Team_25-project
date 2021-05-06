@@ -60,16 +60,13 @@ public class Counselor extends users.User {
 
     public void AddNewTest(){
         Quiz test = new Quiz();
-        test.AddNewQuizToDB();
+        test.InitNewQuiz();
     }
 
     public void RemoveOrHaltQuiz(){
 
         Scanner in = new Scanner(System.in);
-
-
         ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
-
 
         System.out.println("----List Of Tests----");
         for(Quiz quiz : Quizzes){
@@ -88,15 +85,16 @@ public class Counselor extends users.User {
             return;
         }
 
-        System.out.println("----Choose----");
-        System.out.println("1.Remove Test");
-        System.out.println("2.Inactive Test");
-        System.out.println("3.Exit without change");
-
-        choice = in.nextInt();
 
 
         while(true) {
+
+            System.out.println("----Choose----");
+            System.out.println("1.Remove Test");
+            System.out.println("2.Inactive Test");
+            System.out.println("3.Exit");
+            choice = in.nextInt();
+
             switch (choice) {
                 case 1:
                     quiz.RemoveThisQuiz();
@@ -111,7 +109,64 @@ public class Counselor extends users.User {
             }
         }
 
+    }
 
+    public void EditTest(){
+
+        Scanner in = new Scanner(System.in);
+        ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
+
+        System.out.println("----List Of Tests----");
+        for(Quiz quiz : Quizzes){
+            if(quiz.isActive())
+                System.out.println(quiz.getId() + ". " + quiz.getName());
+        }
+
+        int choice;
+        System.out.println("Choose test");
+        choice = in.nextInt();
+        in.nextLine();
+        Quiz quiz = new Quiz();
+        quiz.GetSpecificQuizFromDB(choice);
+        if(quiz.getId() == 0)
+        {
+            System.out.println("Invalid Test ID");
+            return;
+        }
+
+
+        while(true) {
+
+            System.out.println("----Choose----");
+            System.out.println("1.Edit Test name");
+            System.out.println("2.Edit Questions");
+            System.out.println("3.Exit");
+            String Option = in.nextLine();
+
+            switch (Option){
+
+                case "1" :
+                    String confirm;
+                    String NewName;
+                    do{
+                        System.out.println("Enter the Test Name");
+                        NewName = in.nextLine();
+                        System.out.println("Press Y to confirm to change enter any other button");
+                        confirm = in.nextLine();
+                        confirm = confirm.toLowerCase();
+                    }while(!confirm.equals("y"));
+                    quiz.EditName(NewName);
+                    break;
+                case "2" :
+                    quiz.EditQuestions();
+                    break;
+                case "3":
+                    return;
+                default:
+                    break;
+
+            }
+        }
 
 
 

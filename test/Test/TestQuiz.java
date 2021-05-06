@@ -20,19 +20,17 @@ class TestQuiz {
 
     @BeforeEach
     void setUp() {
-
         quiz = new Quiz();
         quiz.setGrade(1);
         quiz.setName("ABC TEST");
         quiz.getQuestions().add(new Question("A"));
         quiz.getQuestions().add(new Question("B"));
         quiz.AddNewQuizToDB();
-
     }
 
     @AfterEach
     void tearDown() {
-        quiz.RemoveSpecificQuiz(quiz.getId());
+        Quiz.RemoveSpecificQuiz(quiz.getId());
     }
 
     @Test
@@ -55,7 +53,7 @@ class TestQuiz {
 
     @Test
     public void RemoveSpecificQuiz(){
-        quiz.RemoveSpecificQuiz(quiz.getId());
+        Quiz.RemoveSpecificQuiz(quiz.getId());
         Quiz test = new Quiz();
         test.GetSpecificQuizFromDB(quiz.getId());
         Assert.assertEquals(test.getId(), 0);
@@ -67,6 +65,23 @@ class TestQuiz {
         Quiz test = new Quiz();
         test.GetSpecificQuizFromDB(quiz.getId());
         Assert.assertFalse(test.isActive());
+    }
+
+    @Test
+    public void EditQuiz(){
+        quiz.EditName("QuizEditName");
+        Quiz test = new Quiz();
+        test.GetSpecificQuizFromDB(quiz.getId());
+        Assert.assertEquals("QuizEditName", test.getName());
+    }
+
+
+    @Test
+    public void EditQuestions(){
+        quiz.getQuestions().get(0).EditQuestion("QuestionEditName");
+        Quiz test = new Quiz();
+        test.GetSpecificQuizFromDB(quiz.getId());
+        Assert.assertEquals( "QuestionEditName", test.getQuestions().get(0).getQuestion());
     }
 
 }

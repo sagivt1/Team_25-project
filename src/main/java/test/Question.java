@@ -1,5 +1,11 @@
 package test;
 
+import Database.ZeroDawnDatabase;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Question {
@@ -50,6 +56,28 @@ public class Question {
 
     public void setTestId(int testId) {
         QuizId = testId;
+    }
+
+    public void EditQuestion(String NewQuestion) {
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+
+        if (con == null) {
+            System.exit(1);
+        }
+
+        try {
+            String query = "update question set question = ? where question_id = ?;";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setString(1, NewQuestion);
+            stmt.setInt(2, this.Id);
+            stmt.execute();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        
+        this.question = NewQuestion;
     }
 
 }

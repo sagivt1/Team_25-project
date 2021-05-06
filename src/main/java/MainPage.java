@@ -250,12 +250,13 @@ public class MainPage {
 
     }
 
-    public static void StudentMenu(Student student) {
+    public static void StudentMenu(Student student){
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
             System.out.println("1.Edit profile");
             System.out.println("2.Exit");
+            System.out.println("3.start test");
             Opt = scanM.next();
 
 
@@ -265,6 +266,9 @@ public class MainPage {
                     break;
                 case "2":
                     student = null;
+                    return;
+                case "3":
+                    Student.start_test2();
                     return;
                 default:
                     System.out.println("Invalid option");

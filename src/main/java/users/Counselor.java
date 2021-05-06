@@ -85,8 +85,7 @@ public class Counselor extends users.User {
             return;
         }
 
-
-
+        
         while(true) {
 
             System.out.println("----Choose----");
@@ -171,9 +170,6 @@ public class Counselor extends users.User {
 
 
     }
-
-
-
 
 
 

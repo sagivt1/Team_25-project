@@ -4,10 +4,8 @@ import users.Parent;
 import users.Student;
 import users.User;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +17,6 @@ public class MainPage {
 
         Scanner scanM = new Scanner(System.in);
         User user;
-
 
         while(true) {
 
@@ -63,8 +60,6 @@ public class MainPage {
             }
         }
     }
-
-
 
     public static User sign_up(){
 
@@ -207,10 +202,7 @@ public class MainPage {
                 counselor.SignUp(ID, pass, fName, lName, BirthDate, email);
                 return counselor;
         }
-
-
         return null;
-
     }
 
     public static User login() {
@@ -258,7 +250,6 @@ public class MainPage {
             System.out.println("2.Exit");
             System.out.println("3.start test");
             Opt = scanM.next();
-
 
             switch (Opt) {
                 case "1":
@@ -319,6 +310,47 @@ public class MainPage {
                     System.out.println("Invalid option");
             }
         }
+    }
+
+    public static void ThreeQuizAlert(Parent parent) {
+        parent.AddKidsToArray();
+        if (parent.GetKidsArraySize() == 0) {
+            //System.out.println("list is empty");
+        }
+        else {
+            System.out.println("parent have " + parent.GetKidsArraySize() + " kids");
+            parent.ShowMyKids();
+
+            Connection con = ZeroDawnDatabase.GetDbCon();
+            if(con == null)
+            {
+                System.exit(1);
+            }
+            try {
+                ArrayList<Integer> tests;
+                tests = new ArrayList<Integer>();
+                tests.clear();
+                String tests_query = "SELECT test_id FROM test WHERE is_active = 1";
+                PreparedStatement stmt = con.prepareCall(tests_query);
+                ResultSet res = stmt.executeQuery(tests_query);
+                while (res.next()) {
+                    tests.add(res.getInt("test_id"));
+                }
+                System.out.println("the test array size is: " + tests.size());
+                System.out.println("the tests are: " + tests);
+                int max_id = tests.get(0);
+                //System.out.println("the first element is: " + max_id);
+                //String kid_query = "SELECT test_id FROM test WHERE is_active = 1";
+
+                res.close();
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        //parent.ShowMyKids();
+        //String newLine = System.getProperty("line.separator");
+        //System.out.println(newLine);
 
     }
 
@@ -327,6 +359,8 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
+            //System.out.println("menu check");
+            ThreeQuizAlert(parent);
             System.out.println("\n1.Edit profile");
             System.out.println("2.Add child");
             System.out.println("3.Remove child");
@@ -443,6 +477,4 @@ public class MainPage {
             }
         }
     }
-
-
 }

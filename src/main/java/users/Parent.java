@@ -199,6 +199,14 @@ public class Parent extends User {
         return Opt;
     }
 
+    public ArrayList GetKidsArray() {
+        return New_Kids;
+    }
+
+    public int GetKidsArraySize() {
+        return New_Kids.size();
+    }
+
     public void MessageToCounselor() {
         AddKidsToArray();
         if (New_Kids.size() == 0) {

@@ -97,7 +97,7 @@ public class Parent extends User {
             System.exit(1);
         }
         try {
-            String query = "INSERT INTO kids Values(?,?)";// need to check new DB
+            String query = "INSERT INTO kids Values(?,?)";
             PreparedStatement stmt = con.prepareCall(query);
             stmt.setString(1, pId);
             stmt.setString(2, cId);
@@ -167,6 +167,13 @@ public class Parent extends User {
         }
     }
 
+    public void ShowMyKids() {
+        int i;
+        for (i = 0; i < New_Kids.size(); i++) {
+            System.out.println(i + 1 + ".ID: " + New_Kids.get(i));
+        }
+    }
+
     public void RemoveChild() {
         AddKidsToArray();
         if (New_Kids.size() == 0) {
@@ -175,18 +182,52 @@ public class Parent extends User {
         }
         else {
             System.out.println("Choose a kid from the list to remove");
-            int i;
-            for (i = 0; i < New_Kids.size(); i++) {
-                System.out.println(i + 1 + ".ID: " + New_Kids.get(i));
-            }
-            Scanner scanM = new Scanner(System.in);
-            int Opt = scanM.nextInt();
-            while (Opt < 1 && Opt > New_Kids.size()) {
-                System.out.print("Wrong Input, try again: ");
-                Opt = scanM.nextInt();
-            }
+            ShowMyKids();
+            int Opt = ChooseKidFromArray();
             DeleteChildFromDB(getUserID(), New_Kids.get(Opt - 1));
             System.out.println("child was deleted");
+        }
+    }
+
+    public int ChooseKidFromArray() {
+        Scanner scanM = new Scanner(System.in);
+        int Opt = scanM.nextInt();
+        while (Opt < 1 && Opt > New_Kids.size()) {
+            System.out.print("Wrong Input, try again: ");
+            Opt = scanM.nextInt();
+        }
+        return Opt;
+    }
+
+    public void MessageToCounselor() {
+        AddKidsToArray();
+        if (New_Kids.size() == 0) {
+            System.out.println("You didn't added any kid yet");
+            System.out.println("You need to add kid first");
+        }
+        else {
+            Connection con = ZeroDawnDatabase.GetDbCon();
+            if(con == null)
+            {
+                System.exit(1);
+            }
+            try {
+                System.out.println("Choose a child from the list you would like to send a message to the counselor about");
+                ShowMyKids();
+                int Opt = ChooseKidFromArray();
+                System.out.println("Enter your message to the counselor");
+                Scanner scan = new Scanner(System.in);
+                String msg = scan.nextLine();
+                String query = "INSERT INTO message(parent_id,student_id,msg) Values(?,?,?)";
+                PreparedStatement stmt = con.prepareCall(query);
+                stmt.setString(1, getUserID());
+                stmt.setString(2, New_Kids.get(Opt - 1));
+                stmt.setString(3, msg);
+                stmt.execute();
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 }

@@ -323,14 +323,17 @@ public class MainPage {
     }
 
     public static void ParentMenu(Parent parent) {
+        String newLine = System.getProperty("line.separator");
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
             System.out.println("\n1.Edit profile");
             System.out.println("2.Add child");
             System.out.println("3.Remove child");
-            System.out.println("4.Exit");
+            System.out.println("4.Send message to counselor");
+            System.out.println("5.Exit");
             Opt = scanM.next();
+            System.out.print(newLine);
             switch (Opt) {
                 case "1":
                     Edit(parent);
@@ -342,6 +345,9 @@ public class MainPage {
                     parent.RemoveChild();
                     break;
                 case "4":
+                    parent.MessageToCounselor();
+                    break;
+                case "5":
                     parent = null;
                     return;
                 default:

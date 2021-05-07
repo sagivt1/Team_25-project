@@ -6,6 +6,8 @@ import users.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -314,13 +316,9 @@ public class MainPage {
 
     public static void ThreeQuizAlert(Parent parent) {
         parent.AddKidsToArray();
-        if (parent.GetKidsArraySize() == 0) {
-            //System.out.println("list is empty");
-        }
-        else {
-            System.out.println("parent have " + parent.GetKidsArraySize() + " kids");
-            parent.ShowMyKids();
-
+        if (parent.GetKidsArraySize() != 0) {
+            //System.out.println("parent have " + parent.GetKidsArraySize() + " kids");
+            //parent.ShowMyKids();
             Connection con = ZeroDawnDatabase.GetDbCon();
             if(con == null)
             {
@@ -336,12 +334,32 @@ public class MainPage {
                 while (res.next()) {
                     tests.add(res.getInt("test_id"));
                 }
-                System.out.println("the test array size is: " + tests.size());
-                System.out.println("the tests are: " + tests);
+                //System.out.println("the test array size is: " + tests.size());
+                //System.out.println("the tests are: " + tests);
                 int max_id = tests.get(0);
+                for (int i = 0; i < tests.size(); i++) {
+                    if (tests.get(i) > max_id) {
+                        max_id = tests.get(i);
+                    }
+                }
+                //System.out.println("the max id is: " + max_id);
                 //System.out.println("the first element is: " + max_id);
                 //String kid_query = "SELECT test_id FROM test WHERE is_active = 1";
+                Map<Integer,String> map = new HashMap<>();
+                //ResultSet kid_res = null;
+                for (int j = 0; j < parent.GetKidsArraySize(); j++) {
+                    String kid_query = "SELECT test_id AND user_id FROM start_test WHERE user_id = " + parent.GetKidsArray().get(j);
+                    PreparedStatement kid_stmt = con.prepareCall(kid_query);
+                    //kid_res = kid_stmt.executeQuery(kid_query);
+                    res = kid_stmt.executeQuery(kid_query);
+                    while (res.next()) {
+                        map.put(res.getInt("test_id"), res.getString("user_id"));
+                        //tests.add(rst.getInt("test_id"));
+                    }
+                }
+                map.entrySet();
 
+                //kid_res.close();
                 res.close();
                 con.close();
             } catch (SQLException throwables) {

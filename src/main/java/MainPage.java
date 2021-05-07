@@ -346,20 +346,21 @@ public class MainPage {
                 //System.out.println("the first element is: " + max_id);
                 //String kid_query = "SELECT test_id FROM test WHERE is_active = 1";
                 Map<Integer,String> map = new HashMap<>();
-                //ResultSet kid_res = null;
+                ResultSet kid_res = null;
                 for (int j = 0; j < parent.GetKidsArraySize(); j++) {
-                    String kid_query = "SELECT test_id AND user_id FROM start_test WHERE user_id = " + parent.GetKidsArray().get(j);
+                    String kid_query = "SELECT test_id, user_id FROM start_test WHERE user_id = " + parent.GetKidsArray().get(j);
                     PreparedStatement kid_stmt = con.prepareCall(kid_query);
-                    //kid_res = kid_stmt.executeQuery(kid_query);
-                    res = kid_stmt.executeQuery(kid_query);
-                    while (res.next()) {
-                        map.put(res.getInt("test_id"), res.getString("user_id"));
-                        //tests.add(rst.getInt("test_id"));
+                    kid_res = kid_stmt.executeQuery(kid_query);
+                    //res = kid_stmt.executeQuery(kid_query);
+                    while (kid_res.next()) {
+                        map.put(kid_res.getInt("test_id"), kid_res.getString("user_id"));
                     }
                 }
-                map.entrySet();
+                for(Map.Entry m:map.entrySet()){
+                    System.out.println(m.getKey()+" "+m.getValue());
+                }
 
-                //kid_res.close();
+                kid_res.close();
                 res.close();
                 con.close();
             } catch (SQLException throwables) {

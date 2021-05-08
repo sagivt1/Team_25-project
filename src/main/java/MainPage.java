@@ -4,10 +4,10 @@ import users.Parent;
 import users.Student;
 import users.User;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +19,6 @@ public class MainPage {
 
         Scanner scanM = new Scanner(System.in);
         User user;
-
 
         while(true) {
 
@@ -64,8 +63,6 @@ public class MainPage {
         }
     }
 
-
-
     public static User sign_up(){
 
         String ID;
@@ -74,6 +71,7 @@ public class MainPage {
         String lName;
         Date BirthDate;
         String email;
+        int cls = 0;
         char type;
 
         Scanner scanObj = new Scanner(System.in);
@@ -172,14 +170,24 @@ public class MainPage {
                 System.out.print("Enter 1 for student" + newLine + "Enter 2 for parent" + newLine + "Enter 3 for counselor" + newLine + "Enter Type: ");
                 type = scanObj.next().charAt(0);
             }
+            if (type == '1') {
+                Scanner classScan = new Scanner(System.in);
+                System.out.print("Please enter your class: ");
+                cls = classScan.nextInt();
+                while (cls < 1 || cls > 12) {
+                    System.out.println("Wrong input, try again");
+                    System.out.print("Please enter your class: ");
+                    cls = classScan.nextInt();
+                }
+            }
             if (type == '3') {
                 Scanner pScan = new Scanner(System.in);
-                System.out.println("Please enter password for counselor creation: ");
+                System.out.print("Please enter password for counselor creation: ");
                 String tPass = pScan.nextLine();
                 while (!tPass.equals("1111")) {
                     System.out.println("Wrong password, try again..");
                     System.out.println("To cancel the action and exit the system enter 1 in the password");
-                    System.out.println("Please enter password for counselor creation: ");
+                    System.out.print("Please enter password for counselor creation: ");
                     tPass = pScan.nextLine();
                     if(tPass.equals("1")) {
                         System.exit(0);
@@ -196,7 +204,7 @@ public class MainPage {
         switch (type){
             case '1':
                 Student student = new Student();
-                student.SignUp(ID,pass, fName, lName, BirthDate, email,1);
+                student.SignUp(ID, pass, fName, lName, BirthDate, email, cls);
                 return student;
             case '2':
                 Parent parent = new Parent();
@@ -207,10 +215,7 @@ public class MainPage {
                 counselor.SignUp(ID, pass, fName, lName, BirthDate, email);
                 return counselor;
         }
-
-
         return null;
-
     }
 
     public static User login() {
@@ -254,21 +259,19 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
-            System.out.println("\n1.Edit profile");
-            System.out.println("2.Exit");
-            System.out.println("3.start test");
+            System.out.println("\n1.Start test");
+            System.out.println("2.Edit profile");
+            System.out.println("3.Exit");
             Opt = scanM.next();
-
-
             switch (Opt) {
                 case "1":
-                    Edit(student);
+                    Student.start_test2();
                     break;
                 case "2":
-                    student = null;
-                    return;
+                    Edit(student);
+                    break;
                 case "3":
-                    Student.start_test2();
+                    student = null;
                     return;
                 default:
                     System.out.println("Invalid option");
@@ -319,7 +322,132 @@ public class MainPage {
                     System.out.println("Invalid option");
             }
         }
+    }
 
+    public static int GetKidGrade(String kidId) {
+        int check = 0;
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        try {
+            String query = "SELECT grade FROM student WHERE user_id = " + kidId;
+            PreparedStatement stmt = con.prepareCall(query);
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                check = res.getInt("grade");
+            }
+            res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return check;
+    }
+
+    public static ArrayList<Integer> GetTestsByGrade(int testClass) {
+        ArrayList<Integer> tests;
+        tests = new ArrayList<Integer>();
+        tests.clear();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        try {
+            String query = "SELECT test_id FROM test WHERE grade = " + testClass + " AND is_active = 1 order by test_id desc limit 3";
+            PreparedStatement stmt = con.prepareCall(query);
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                tests.add(res.getInt("test_id"));
+            }
+            res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return tests;
+    }
+
+    public static ArrayList<Integer> GetKidTests(String kidId) {
+        ArrayList<Integer> kidTests;
+        kidTests = new ArrayList<Integer>();
+        kidTests.clear();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        ResultSet kid_res = null;
+        try {
+            String kid_query = "SELECT test_id FROM start_test WHERE user_id = " + kidId;
+            PreparedStatement kid_stmt = con.prepareCall(kid_query);
+            kid_res = kid_stmt.executeQuery(kid_query);
+            while (kid_res.next()) {
+                kidTests.add(kid_res.getInt("test_id"));
+            }
+            kid_res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return kidTests;
+    }
+
+    public static boolean QuizKidsClass(String kidId) {
+        int kidGrade = GetKidGrade(kidId);
+        ArrayList<Integer> tests;
+        tests = new ArrayList<Integer>();
+        tests.clear();
+        tests = GetTestsByGrade(kidGrade);
+        ArrayList<Integer> kidTests;
+        kidTests = new ArrayList<Integer>();
+        kidTests.clear();
+        kidTests = GetKidTests(kidId);
+        for (int i = 0; i < tests.size(); i++) {
+            for (int j = 0; j < kidTests.size(); j++) {
+                if (tests.get(i) == kidTests.get(j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static String NameFromId(String kidId) {
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        ResultSet kid_res = null;
+        String name = null;
+        try {
+            String kid_query = "SELECT first_name FROM users WHERE id = " + kidId;
+            PreparedStatement kid_stmt = con.prepareCall(kid_query);
+            kid_res = kid_stmt.executeQuery(kid_query);
+            while (kid_res.next()) {
+                name = kid_res.getString("first_name");
+            }
+            kid_res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return name;
+    }
+
+    public static void ThreeQuizAlert(Parent parent) {
+        parent.AddKidsToArray();
+        if (parent.GetKidsArraySize() != 0) {
+            for (int i = 0; i < parent.GetKidsArraySize(); i++) {
+                if (QuizKidsClass(parent.GetKidsArray().get(i).toString())) {
+                    String kidName = NameFromId(parent.GetKidsArray().get(i).toString());
+                    System.out.println("Your kid " + kidName + " didn't do any of the last 3 tests he got");
+                }
+            }
+        }
     }
 
     public static void ParentMenu(Parent parent) {
@@ -327,6 +455,7 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
+            ThreeQuizAlert(parent);
             System.out.println("\n1.Edit profile");
             System.out.println("2.Add child");
             System.out.println("3.Remove child");
@@ -443,6 +572,4 @@ public class MainPage {
             }
         }
     }
-
-
 }

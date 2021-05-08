@@ -346,62 +346,108 @@ public class MainPage {
         return check;
     }
 
+    public static ArrayList<Integer> GetTestsByGrade(int testClass) {
+        ArrayList<Integer> tests;
+        tests = new ArrayList<Integer>();
+        tests.clear();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        try {
+            String query = "SELECT test_id FROM test WHERE grade = " + testClass + " AND is_active = 1 order by test_id desc limit 3";
+            PreparedStatement stmt = con.prepareCall(query);
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                tests.add(res.getInt("test_id"));
+            }
+            res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return tests;
+    }
+
+    public static ArrayList<Integer> GetKidTests(String kidId) {
+        ArrayList<Integer> kidTests;
+        kidTests = new ArrayList<Integer>();
+        kidTests.clear();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        ResultSet kid_res = null;
+        try {
+            String kid_query = "SELECT test_id FROM start_test WHERE user_id = " + kidId;
+            PreparedStatement kid_stmt = con.prepareCall(kid_query);
+            kid_res = kid_stmt.executeQuery(kid_query);
+            while (kid_res.next()) {
+                kidTests.add(kid_res.getInt("test_id"));
+            }
+            kid_res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return kidTests;
+    }
+
+    public static boolean QuizKidsClass(String kidId) {
+        int kidGrade = GetKidGrade(kidId);
+        ArrayList<Integer> tests;
+        tests = new ArrayList<Integer>();
+        tests.clear();
+        tests = GetTestsByGrade(kidGrade);
+        ArrayList<Integer> kidTests;
+        kidTests = new ArrayList<Integer>();
+        kidTests.clear();
+        kidTests = GetKidTests(kidId);
+        for (int i = 0; i < tests.size(); i++) {
+            for (int j = 0; j < kidTests.size(); j++) {
+                if (tests.get(i) == kidTests.get(j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static String NameFromId(String kidId) {
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        ResultSet kid_res = null;
+        String name = null;
+        try {
+            String kid_query = "SELECT first_name FROM users WHERE id = " + kidId;
+            PreparedStatement kid_stmt = con.prepareCall(kid_query);
+            kid_res = kid_stmt.executeQuery(kid_query);
+            while (kid_res.next()) {
+                name = kid_res.getString("first_name");
+            }
+            kid_res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return name;
+    }
+
     public static void ThreeQuizAlert(Parent parent) {
         parent.AddKidsToArray();
         if (parent.GetKidsArraySize() != 0) {
-            //System.out.println("parent have " + parent.GetKidsArraySize() + " kids");
-            //parent.ShowMyKids();
-            Connection con = ZeroDawnDatabase.GetDbCon();
-            if(con == null)
-            {
-                System.exit(1);
-            }
-            try {
-                ArrayList<Integer> tests;
-                tests = new ArrayList<Integer>();
-                tests.clear();
-                String tests_query = "SELECT test_id FROM test WHERE is_active = 1";
-                PreparedStatement stmt = con.prepareCall(tests_query);
-                ResultSet res = stmt.executeQuery(tests_query);
-                while (res.next()) {
-                    tests.add(res.getInt("test_id"));
+            for (int i = 0; i < parent.GetKidsArraySize(); i++) {
+                if (QuizKidsClass(parent.GetKidsArray().get(i).toString())) {
+                    String kidName = NameFromId(parent.GetKidsArray().get(i).toString());
+                    System.out.println("Your kid " + kidName + " didn't do any of the last 3 tests he got");
                 }
-                //System.out.println("the test array size is: " + tests.size());
-                //System.out.println("the tests are: " + tests);
-                int max_id = tests.get(0);
-                for (int i = 0; i < tests.size(); i++) {
-                    if (tests.get(i) > max_id) {
-                        max_id = tests.get(i);
-                    }
-                }
-                System.out.println("the max id is: " + max_id);
-                //System.out.println("the first element is: " + max_id);
-                //String kid_query = "SELECT test_id FROM test WHERE is_active = 1";
-                Map<Integer,String> map = new HashMap<>();
-                ResultSet kid_res = null;
-                for (int j = 0; j < parent.GetKidsArraySize(); j++) {
-                    String kid_query = "SELECT test_id, user_id FROM start_test WHERE user_id = " + parent.GetKidsArray().get(j);
-                    PreparedStatement kid_stmt = con.prepareCall(kid_query);
-                    kid_res = kid_stmt.executeQuery(kid_query);
-                    //res = kid_stmt.executeQuery(kid_query);
-                    while (kid_res.next()) {
-                        map.put(kid_res.getInt("test_id"), kid_res.getString("user_id"));
-                    }
-                }
-                for(Map.Entry m:map.entrySet()) {
-                    System.out.println(m.getKey()+" "+m.getValue());
-                }
-                kid_res.close();
-                res.close();
-                con.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
         }
-        //parent.ShowMyKids();
-        //String newLine = System.getProperty("line.separator");
-        //System.out.println(newLine);
-        //System.out.println("my kid with id of 123123123 grade is: " + GetKidGrade("123123123"));
     }
 
     public static void ParentMenu(Parent parent) {
@@ -409,7 +455,6 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
-            //System.out.println("menu check");
             ThreeQuizAlert(parent);
             System.out.println("\n1.Edit profile");
             System.out.println("2.Add child");

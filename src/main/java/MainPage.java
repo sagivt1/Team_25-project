@@ -71,6 +71,7 @@ public class MainPage {
         String lName;
         Date BirthDate;
         String email;
+        int cls = 0;
         char type;
 
         Scanner scanObj = new Scanner(System.in);
@@ -169,6 +170,16 @@ public class MainPage {
                 System.out.print("Enter 1 for student" + newLine + "Enter 2 for parent" + newLine + "Enter 3 for counselor" + newLine + "Enter Type: ");
                 type = scanObj.next().charAt(0);
             }
+            if (type == '1') {
+                Scanner classScan = new Scanner(System.in);
+                System.out.println("Please enter your class: ");
+                cls = classScan.nextInt();
+                while (cls < 1 && cls > 12) {
+                    System.out.println("Wrong input, try again");
+                    System.out.println("Please enter your class: ");
+                    cls = classScan.nextInt();
+                }
+            }
             if (type == '3') {
                 Scanner pScan = new Scanner(System.in);
                 System.out.println("Please enter password for counselor creation: ");
@@ -193,7 +204,7 @@ public class MainPage {
         switch (type){
             case '1':
                 Student student = new Student();
-                student.SignUp(ID,pass, fName, lName, BirthDate, email,1);
+                student.SignUp(ID, pass, fName, lName, BirthDate, email, cls);
                 return student;
             case '2':
                 Parent parent = new Parent();
@@ -248,20 +259,19 @@ public class MainPage {
         Scanner scanM = new Scanner(System.in);
         String Opt;
         while(true) {
-            System.out.println("\n1.Edit profile");
-            System.out.println("2.Exit");
-            System.out.println("3.start test");
+            System.out.println("\n1.Start test");
+            System.out.println("2.Edit profile");
+            System.out.println("3.Exit");
             Opt = scanM.next();
-
             switch (Opt) {
                 case "1":
-                    Edit(student);
+                    Student.start_test2();
                     break;
                 case "2":
-                    student = null;
-                    return;
+                    Edit(student);
+                    break;
                 case "3":
-                    Student.start_test2();
+                    student = null;
                     return;
                 default:
                     System.out.println("Invalid option");
@@ -342,7 +352,7 @@ public class MainPage {
                         max_id = tests.get(i);
                     }
                 }
-                //System.out.println("the max id is: " + max_id);
+                System.out.println("the max id is: " + max_id);
                 //System.out.println("the first element is: " + max_id);
                 //String kid_query = "SELECT test_id FROM test WHERE is_active = 1";
                 Map<Integer,String> map = new HashMap<>();

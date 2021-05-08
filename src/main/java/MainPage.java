@@ -172,22 +172,22 @@ public class MainPage {
             }
             if (type == '1') {
                 Scanner classScan = new Scanner(System.in);
-                System.out.println("Please enter your class: ");
+                System.out.print("Please enter your class: ");
                 cls = classScan.nextInt();
-                while (cls < 1 && cls > 12) {
+                while (cls < 1 || cls > 12) {
                     System.out.println("Wrong input, try again");
-                    System.out.println("Please enter your class: ");
+                    System.out.print("Please enter your class: ");
                     cls = classScan.nextInt();
                 }
             }
             if (type == '3') {
                 Scanner pScan = new Scanner(System.in);
-                System.out.println("Please enter password for counselor creation: ");
+                System.out.print("Please enter password for counselor creation: ");
                 String tPass = pScan.nextLine();
                 while (!tPass.equals("1111")) {
                     System.out.println("Wrong password, try again..");
                     System.out.println("To cancel the action and exit the system enter 1 in the password");
-                    System.out.println("Please enter password for counselor creation: ");
+                    System.out.print("Please enter password for counselor creation: ");
                     tPass = pScan.nextLine();
                     if(tPass.equals("1")) {
                         System.exit(0);
@@ -324,6 +324,28 @@ public class MainPage {
         }
     }
 
+    public static int GetKidGrade(String kidId) {
+        int check = 0;
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if(con == null)
+        {
+            System.exit(1);
+        }
+        try {
+            String query = "SELECT grade FROM student WHERE user_id = " + kidId;
+            PreparedStatement stmt = con.prepareCall(query);
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                check = res.getInt("grade");
+            }
+            res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return check;
+    }
+
     public static void ThreeQuizAlert(Parent parent) {
         parent.AddKidsToArray();
         if (parent.GetKidsArraySize() != 0) {
@@ -366,10 +388,9 @@ public class MainPage {
                         map.put(kid_res.getInt("test_id"), kid_res.getString("user_id"));
                     }
                 }
-                for(Map.Entry m:map.entrySet()){
+                for(Map.Entry m:map.entrySet()) {
                     System.out.println(m.getKey()+" "+m.getValue());
                 }
-
                 kid_res.close();
                 res.close();
                 con.close();
@@ -380,7 +401,7 @@ public class MainPage {
         //parent.ShowMyKids();
         //String newLine = System.getProperty("line.separator");
         //System.out.println(newLine);
-
+        //System.out.println("my kid with id of 123123123 grade is: " + GetKidGrade("123123123"));
     }
 
     public static void ParentMenu(Parent parent) {

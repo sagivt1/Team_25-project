@@ -255,7 +255,6 @@ public class User {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     public void EditPassword(String NewPassword){
@@ -276,5 +275,4 @@ public class User {
             throwables.printStackTrace();
         }
     }
-
 }

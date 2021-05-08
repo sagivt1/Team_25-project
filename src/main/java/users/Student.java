@@ -32,7 +32,6 @@ public class Student extends User {
             String query = "INSERT INTO users Values(?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareCall(query);
 
-
             this.UserID = Id;
             stmt.setString(1, Id);
             this.password = Password;
@@ -55,12 +54,10 @@ public class Student extends User {
             stmt.setInt(2, grade);
             stmt.execute();
             con.close();
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
-
 
     public static void start_test1(String ans[][]){
         Scanner in = new Scanner(System.in);
@@ -90,9 +87,7 @@ public class Student extends User {
         }
     }
 
-
-
-    public static String[][] start_test(){
+    public static String[][] start_test() {
         String[][] AnswersCntainer = new String[10][5];
         Scanner in = new Scanner(System.in);
         int CH;
@@ -122,7 +117,6 @@ public class Student extends User {
                 System.out.println("Invalid Test ID");
                 return AnswersCntainer;
             }
-
 
             int a = 1;
             for (int i = 0; i < quiz.getQuestions().size(); i++) {
@@ -163,7 +157,6 @@ public class Student extends User {
                     if(temp_choice==1 || temp_choice==2){
                         flag=0;
                     }
-
                 }
                 if(temp_choice==1){
                     while(Ans!=1 && Ans!=2 && Ans!=3 && Ans!=4) {
@@ -186,12 +179,10 @@ public class Student extends User {
                 }
             }
             return AnswersCntainer;
-
         }
-
         else{
             return AnswersCntainer;
-                }
+        }
     }
 
 
@@ -199,12 +190,4 @@ public class Student extends User {
     {
         start_test1(start_test());
     }
-
-
 }
-
-
-
-
-
-

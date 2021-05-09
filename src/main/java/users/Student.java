@@ -113,10 +113,6 @@ public class Student extends User {
             }
             int choice;
             int j=0,flag1=0;
-            //for (int num : id_test)
-          //  {
-              //  System.out.println(num);
-           // }
             System.out.println("Choose test:");
             Quiz quiz = new Quiz();
             while (j<1) {

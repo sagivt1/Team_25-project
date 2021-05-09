@@ -19,7 +19,7 @@ public class ZeroDawnDatabase {
 
             String url = "jdbc:mysql://localhost/zero_dawn?useSSL=false";
             String user = "root";
-            String password = "****";//Edit to your mysql password
+            String password = "012452595";//Edit to your mysql password
 
             conn = DriverManager.getConnection(url, user, password);
 

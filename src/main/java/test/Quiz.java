@@ -68,10 +68,11 @@ public class Quiz {
         this.grade = grade;
     }
 
-    public Quiz(int id, boolean isActive, String name) {
+    public Quiz(int id, boolean isActive, String name, int grade) {
         this.Name = name;
         this.Id = id;
         this.isActive = isActive;
+        this.grade = grade;
     }
 
     public Quiz(String name) {
@@ -337,13 +338,13 @@ public class Quiz {
         }
 
         try{
-            String query = "select test_id, is_active, test_name from test;";
+            String query = "select test_id, is_active, test_name, grade from test;";
             PreparedStatement stmt = con.prepareCall(query);
             boolean HadResult = stmt.execute();
             if(HadResult){
                 ResultSet res = stmt.getResultSet();
                 while(res.next()){
-                    Quizzes.add(new Quiz(res.getInt(1), res.getBoolean(2), res.getString(3)));
+                    Quizzes.add(new Quiz(res.getInt(1), res.getBoolean(2), res.getString(3),res.getInt(4)));
                 }
                 res.close();
             }

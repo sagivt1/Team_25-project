@@ -59,7 +59,7 @@ public class Student extends User {
         }
     }
 
-    public static void start_test1(String ans[][]){
+    public void start_test1(String ans[][]){
         Scanner in = new Scanner(System.in);
         Quiz quiz = new Quiz();
         quiz.GetSpecificQuizFromDB(Integer.parseInt(ans[0][0]));
@@ -87,7 +87,7 @@ public class Student extends User {
         }
     }
 
-    public static String[][] start_test() {
+    public String[][] start_test() {
         String[][] AnswersCntainer = new String[10][5];
         Scanner in = new Scanner(System.in);
         int CH;
@@ -104,18 +104,33 @@ public class Student extends User {
         if (CH == 1) {
             ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
             System.out.println("----List Of Tests----");
+            ArrayList<Integer> id_test = new ArrayList<>();
             for (Quiz quiz : Quizzes) {
-                if (quiz.isActive())
+                if (quiz.isActive() && quiz.getGrade() == grade) {
                     System.out.println(quiz.getId() + ". " + quiz.getName());
+                    id_test.add(quiz.getId());
+                }
             }
             int choice;
+            int j=0,flag1=0;
             System.out.println("Choose test:");
-            choice = in.nextInt();
             Quiz quiz = new Quiz();
-            quiz.GetSpecificQuizFromDB(choice);
-            if (quiz.getId() == 0) {
-                System.out.println("Invalid Test ID");
-                return AnswersCntainer;
+            while (j<1) {
+                choice = in.nextInt();
+                for (int num : id_test) {
+                    if (num == choice) {
+                        flag1=1;
+                        quiz.GetSpecificQuizFromDB(choice);
+                        if (quiz.getId() == 0) {
+                            System.out.println("Invalid Test ID");
+                            return AnswersCntainer;
+                        }
+                    }
+                }
+                if (flag1 == 1) {
+                    break;
+                }
+                System.out.println("You entered a wrong number, please select again");
             }
 
             int a = 1;
@@ -186,7 +201,7 @@ public class Student extends User {
     }
 
 
-    public static void start_test2()
+    public void start_test2()
     {
         start_test1(start_test());
     }

@@ -265,7 +265,7 @@ public class MainPage {
             Opt = scanM.next();
             switch (Opt) {
                 case "1":
-                    Student.start_test2();
+                    student.start_test2();
                     break;
                 case "2":
                     Edit(student);

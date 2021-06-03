@@ -261,7 +261,8 @@ public class MainPage {
         while(true) {
             System.out.println("\n1.Start test");
             System.out.println("2.Edit profile");
-            System.out.println("3.Exit");
+            System.out.println("3.Add feedback");
+            System.out.println("4.Exit");
             Opt = scanM.next();
             switch (Opt) {
                 case "1":
@@ -271,6 +272,9 @@ public class MainPage {
                     Edit(student);
                     break;
                 case "3":
+                    student.Add_feedback();
+                    break;
+                case "4":
                     student = null;
                     return;
                 default:
@@ -291,7 +295,8 @@ public class MainPage {
             System.out.println("5.Manage users");
             System.out.println("6.Run simulate");
             System.out.println("7.Edit admin information");
-            System.out.println("8.exit");
+            System.out.println("8.Show Feedback on Quiz");
+            System.out.println("9.exit");
             Opt = scanM.next();
             switch (Opt) {
                 case "1":
@@ -316,6 +321,8 @@ public class MainPage {
                     Edit(counselor);
                     break;
                 case "8":
+                    counselor.Show_Feedback();
+                case "9":
                     counselor = null;
                     return;
                 default:

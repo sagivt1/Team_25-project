@@ -1,12 +1,13 @@
 package users;
 
 import Database.ZeroDawnDatabase;
+//import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import test.Question;
 import test.Quiz;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.sql.Date;
+import java.util.*;
 
 /*
 Student class
@@ -205,4 +206,70 @@ public class Student extends User {
     {
         start_test1(start_test());
     }
-}
+
+
+    public void Add_feedback(){
+        Scanner in = new Scanner(System.in);
+        ArrayList<Integer> Quiz_i_done = new ArrayList<Integer>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        int i=0;
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "select test_id from start_test where user_id =" + UserID + ";";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                        Quiz_i_done.add(res.getInt(1));
+                        i++;
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Set<Integer> s = new LinkedHashSet<>(Quiz_i_done);
+        System.out.println("----List Of Tests----");
+        for (Integer integer : s) {
+            System.out.println(integer);
+        }
+        System.out.println("Please select test number: ");
+        int CH=in.nextInt();
+        int flag=0;
+        while(i<100) {
+            for (Integer integer : s) {
+                    if(integer == CH){
+                        flag=1;
+                        break;
+                    }
+            }
+            if(flag==1){
+                break;
+            }
+            System.out.println("Please select test number from this list: ");
+            System.out.println("----List Of Tests----");
+            for (Integer integ : s) {
+                System.out.println(integ);
+            }
+            CH=in.nextInt();
+        }
+        System.out.println("enter your feedback:");
+        String FD1 = in.nextLine();
+        String FD = in.nextLine();
+        try {
+            String query = "INSERT IGNORE INTO feedback(test_id, feedback_on_test, user_id) VALUES(?,?,?)";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setInt(1,CH);
+            stmt.setString(2,FD);
+            stmt.setString(3, UserID);
+            stmt.execute();
+            con.close();
+            System.out.println("Thanks for your feedback!");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        }
+    }

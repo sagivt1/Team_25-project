@@ -262,7 +262,8 @@ public class MainPage {
             System.out.println("\n1.Start test");
             System.out.println("2.Edit profile");
             System.out.println("3.Add feedback");
-            System.out.println("4.Exit");
+            System.out.println("4.Simulation test");
+            System.out.println("5.Exit");
             Opt = scanM.next();
             switch (Opt) {
                 case "1":
@@ -275,6 +276,8 @@ public class MainPage {
                     student.Add_feedback();
                     break;
                 case "4":
+                    student.Add_feedback();
+                case "5":
                     student = null;
                     return;
                 default:
@@ -467,7 +470,8 @@ public class MainPage {
             System.out.println("2.Add child");
             System.out.println("3.Remove child");
             System.out.println("4.Send message to counselor");
-            System.out.println("5.Exit");
+            System.out.println("5.Simulation Quiz");
+            System.out.println("6.Exit");
             Opt = scanM.next();
             System.out.print(newLine);
             switch (Opt) {
@@ -484,6 +488,8 @@ public class MainPage {
                     parent.MessageToCounselor();
                     break;
                 case "5":
+                    parent.Simulation_test();
+                case "6":
                     parent = null;
                     return;
                 default:

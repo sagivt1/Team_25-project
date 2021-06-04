@@ -278,8 +278,10 @@ public class MainPage {
                     break;
                 case "4":
                     student.Warn_about_friend_in_distress();
+                    break;
                 case "5":
                     student.Test_i_made();
+                    break;
                 case "6":
                     student = null;
                     return;
@@ -302,7 +304,10 @@ public class MainPage {
             System.out.println("6.Show Students list");
             System.out.println("7.Edit admin information");
             System.out.println("8.Show Feedback on Quiz");
-            System.out.println("9.exit");
+            System.out.println("9.Show alerted kids");
+            System.out.println("10.Send message to parent");
+            System.out.println("11.Show messages from parents");
+            System.out.println("12.exit");
             Opt = scanM.next();
             switch (Opt) {
                 case "1":
@@ -338,7 +343,17 @@ public class MainPage {
                     break;
                 case "8":
                     counselor.Show_Feedback();
+                    break;
                 case "9":
+                    counselor.AlertedKids();
+                    break;
+                case "10":
+                    counselor.MessageToParent();
+                    break;
+                case "11":
+                    counselor.ShowMessagesFromParents();
+                    break;
+                case "12":
                     counselor = null;
                     return;
                 default:

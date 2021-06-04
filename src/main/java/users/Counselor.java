@@ -13,14 +13,20 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Counselor extends users.User {
-
+    ArrayList<String> All_Kids;
+    ArrayList<String> Kids_Parents;
 
 
     public Counselor() {
+        All_Kids = new ArrayList<String>();
+        Kids_Parents = new ArrayList<String>();
     }
 
     public Counselor(String CounselorID, String password, String lname, String fname, Date birth_date, String email){
         super(CounselorID, password, lname, fname, birth_date, email);
+        All_Kids = new ArrayList<String>();
+        Kids_Parents = new ArrayList<String>();
+        AddAllKidsToArray();
     }
 
     public void SignUp(String Id, String Password, String FirstName, String LastName,  Date BirthDate,
@@ -109,7 +115,6 @@ public class Counselor extends users.User {
                     break;
             }
         }
-
     }
 
     public void EditTest(){
@@ -203,7 +208,6 @@ public class Counselor extends users.User {
             System.out.println(integer);
         }
         System.out.println("Please select test number to see the feedback: ");
-        //in.nextLine();
         int CH=in.nextInt();
         int flag=0;
         while(i<1) {
@@ -329,6 +333,121 @@ public class Counselor extends users.User {
         for (String string : s) {
             System.out.println(string);
         }
+    }
+
+    public void AddAllKidsToArray() {
+        All_Kids.clear();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        try {
+            String query = "SELECT student_id FROM kids";
+            PreparedStatement stmt = con.prepareCall(query);
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                All_Kids.add(res.getString("student_id"));
+            }
+            res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void ShowALLKids() {
+        int i;
+        for (i = 0; i < All_Kids.size(); i++) {
+            System.out.println(i + 1 + ".ID: " + All_Kids.get(i));
+        }
+    }
+
+    public String ChooseFromKidsArray() {
+        Scanner scanM = new Scanner(System.in);
+        int Opt = scanM.nextInt();
+        while (Opt < 1 && Opt > All_Kids.size()) {
+            System.out.print("Wrong Input, try again: ");
+            Opt = scanM.nextInt();
+        }
+        return All_Kids.get(Opt -1);
+    }
+
+    public void AddParentsToArray(String Opt) {
+        Kids_Parents.clear();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        try {
+            String query = "SELECT parent_id FROM kids WHERE student_id = " + Opt;
+            PreparedStatement stmt = con.prepareCall(query);
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                Kids_Parents.add(res.getString("parent_id"));
+            }
+            res.close();
+            con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void ShowKidsParents() {
+        int i;
+        for (i = 0; i < Kids_Parents.size(); i++) {
+            System.out.println(i + 1 + ".ID: " + Kids_Parents.get(i));
+        }
+    }
+
+    public String ChooseFromParentsArray() {
+        Scanner scanM = new Scanner(System.in);
+        int Opt = scanM.nextInt();
+        while (Opt < 1 && Opt > Kids_Parents.size()) {
+            System.out.print("Wrong Input, try again: ");
+            Opt = scanM.nextInt();
+        }
+        return Kids_Parents.get(Opt -1);
+    }
+
+    public void MessageToParent() {
+        AddAllKidsToArray();
+        if (All_Kids.size() == 0) {
+            System.out.println("You didn't added any kid yet");
+            System.out.println("You need to add kid first");
+        } else {
+            Connection con = ZeroDawnDatabase.GetDbCon();
+            if (con == null) {
+                System.exit(1);
+            }
+            try {
+                System.out.println("Choose a child from the list you would like to send a message to the counselor about");
+                ShowALLKids();
+                String kid = ChooseFromKidsArray();
+                AddParentsToArray(kid);
+                ShowKidsParents();
+                String parent = ChooseFromParentsArray();
+                System.out.println("Enter your message to the counselor");
+                Scanner scan = new Scanner(System.in);
+                String msg = scan.nextLine();
+                String query = "INSERT INTO cmessage(student_id,parent_id,msg) Values(?,?,?)";
+                PreparedStatement stmt = con.prepareCall(query);
+                stmt.setString(1, kid);
+                stmt.setString(2, parent);
+                stmt.setString(3, msg);
+                stmt.execute();
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    public void ShowMessagesFromParents() {
+
+    }
+
+    public void AlertedKids() {
+
     }
 }
 

@@ -293,7 +293,7 @@ public class Student extends User {
         System.out.println("What you would like to report on: ");
         String report = in.nextLine();
         try {
-            String query = "INSERT IGNORE INTO Alert(Warning_messages,user_id, student_name, student_Lname , grade) " +
+            String query = "INSERT IGNORE INTO Alert(msg,user_id, student_name, student_Lname , grade) " +
                     "VALUES(?,?,?,?,?)";
             PreparedStatement stmt = con.prepareCall(query);
             stmt.setString(1,report);

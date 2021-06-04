@@ -272,4 +272,71 @@ public class Student extends User {
             throwables.printStackTrace();
         }
         }
+
+
+
+    public void Warn_about_friend_in_distress()
+    {
+        Scanner in = new Scanner(System.in);
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+
+        System.out.println("Enter the student details you would like to report:");
+        System.out.println("Student name: ");
+        String name = in.nextLine();
+        System.out.println("Student Last name: ");
+        String Lname = in.nextLine();
+        System.out.println("Student Grade: ");
+        String grade1 = in.nextLine();
+        System.out.println("What you would like to report on: ");
+        String report = in.nextLine();
+        try {
+            String query = "INSERT IGNORE INTO Alert(Warning_messages,user_id, student_name, student_Lname , grade) " +
+                    "VALUES(?,?,?,?,?)";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setString(1,report);
+            stmt.setString(2, UserID);
+            stmt.setString(3,name);
+            stmt.setString(4,Lname);
+            stmt.setString(5,grade1);
+            stmt.execute();
+            con.close();
+            System.out.println("Thanks for your report!");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
+
+    public void Test_i_made(){
+        Scanner in = new Scanner(System.in);
+        ArrayList<Integer> Quiz_i_done = new ArrayList<Integer>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        int i=0;
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "select test_id from start_test where user_id =" + UserID + ";";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    Quiz_i_done.add(res.getInt(1));
+                    i++;
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Set<Integer> s = new LinkedHashSet<>(Quiz_i_done);
+        System.out.println("----List Of Tests----");
+        for (Integer integer : s) {
+            System.out.println(integer);
+        }
+    }
+}

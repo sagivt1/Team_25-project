@@ -246,6 +246,90 @@ public class Counselor extends users.User {
         }
     }
 
+    public void Update_Student_Grade(){
+        int flag=0;
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        Scanner in = new Scanner(System.in);
+        Show_Student_list();
+        System.out.println("Enter the ID of the student you want to update:");
+        String IDS = in.nextLine();
+        System.out.println("Enter the Grade you want to change to:");
+        String NG = in.nextLine();
+        try{
+            String query1 = "UPDATE student set grade="+NG+" where user_id =" +IDS+";";
+            PreparedStatement stmt1 = con.prepareCall(query1);
+            stmt1.execute();
+            con.close();
+        }catch (SQLException throwables) {
+            System.out.println("Student not found");
+            flag=1;
+            throwables.printStackTrace();
+        }
+        if(flag==0)
+        {
+            System.out.println("Student details changed successfully");
+
+        }
+    }
+
+    //Delete student from student data base
+    public void Delete_Student(){
+        int flag=0;
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        Scanner in = new Scanner(System.in);
+        Show_Student_list();
+        System.out.println("Enter the ID of the student you want to delete:");
+        String IDS = in.nextLine();
+        try{
+            String query = "delete from users where id="+IDS+";";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.execute();
+            con.close();
+        }catch (SQLException throwables) {
+            System.out.println("Student not found");
+            flag=1;
+            //throwables.printStackTrace();
+        }
+        if(flag==0){
+            System.out.println("Student delete successfully");
+        }
+    }
+
+    public void Show_Student_list(){
+        Scanner in = new Scanner(System.in);
+        ArrayList<String> Student_list = new ArrayList<String>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        int i=0;
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "select user_id from student;";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    Student_list.add(res.getString(1));
+                    i++;
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Set<String> s = new LinkedHashSet<>(Student_list);
+        System.out.println("----ID List Of Students----");
+        for (String string : s) {
+            System.out.println(string);
+        }
+    }
 }
 
 

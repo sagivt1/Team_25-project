@@ -291,7 +291,7 @@ public class MainPage {
 
     public static void CounselorMenu(Counselor counselor) {
         Scanner scanM = new Scanner(System.in);
-        String Opt;
+        String Opt,Opt1;
 
         while(true) {
             System.out.println("\n1.Add new test");
@@ -299,7 +299,7 @@ public class MainPage {
             System.out.println("3.Remove/Inactive test");
             System.out.println("4.Present Potential marked students");
             System.out.println("5.Manage users");
-            System.out.println("6.Run simulate");
+            System.out.println("6.Show Students list");
             System.out.println("7.Edit admin information");
             System.out.println("8.Show Feedback on Quiz");
             System.out.println("9.exit");
@@ -318,10 +318,20 @@ public class MainPage {
                     //marked student function
                     break;
                 case "5":
-                    //manage users function
+                    System.out.println("enter your selection:");
+                    System.out.println("to edit student grade press 1");
+                    System.out.println("to delete student press 2");
+                    Opt1=scanM.next();
+                    if(Opt1.equals("1")){
+                        counselor.Update_Student_Grade();
+                    }
+                    if(Opt1.equals("2"))
+                    {
+                        counselor.Delete_Student();
+                    }
                     break;
                 case "6":
-                    //simulate function
+                    counselor.Show_Student_list();
                     break;
                 case "7":
                     Edit(counselor);

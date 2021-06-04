@@ -329,10 +329,12 @@ public class MainPage {
                     Opt1=scanM.next();
                     if(Opt1.equals("1")){
                         counselor.Update_Student_Grade();
+                        break;
                     }
                     if(Opt1.equals("2"))
                     {
                         counselor.Delete_Student();
+                        break;
                     }
                     break;
                 case "6":
@@ -345,7 +347,7 @@ public class MainPage {
                     counselor.Show_Feedback();
                     break;
                 case "9":
-                    counselor.AlertedKids();
+                    counselor.Alerted_Kids();
                     break;
                 case "10":
                     counselor.MessageToParent();

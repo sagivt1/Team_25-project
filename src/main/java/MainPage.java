@@ -262,8 +262,9 @@ public class MainPage {
             System.out.println("\n1.Start test");
             System.out.println("2.Edit profile");
             System.out.println("3.Add feedback");
-            System.out.println("4.Simulation test");
-            System.out.println("5.Exit");
+            System.out.println("4.Report distressed friend");
+            System.out.println("5.Quizzes I have already taken");
+            System.out.println("6.Exit");
             Opt = scanM.next();
             switch (Opt) {
                 case "1":
@@ -276,8 +277,10 @@ public class MainPage {
                     student.Add_feedback();
                     break;
                 case "4":
-                    student.Add_feedback();
+                    student.Warn_about_friend_in_distress();
                 case "5":
+                    student.Test_i_made();
+                case "6":
                     student = null;
                     return;
                 default:

@@ -336,4 +336,39 @@ public class Parent extends User {
             }
         }
     }
+
+    public void MessageFromCounselor() {
+        ArrayList<String> msg_reports = new ArrayList<String>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "SELECT student_ID,msg FROM cmessage WHERE parent_id = " + getUserID();
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    msg_reports.add(res.getString("student_id"));
+                    msg_reports.add(res.getString("msg"));
+                }
+                if (msg_reports.size() == 0) {
+                    System.out.println("there is no messages");
+                }
+                else {
+                    int i, j = 1;
+                    for (i = 0; i < msg_reports.size(); i += 2) {
+                        System.out.println("Message number " + j);
+                        j++;
+                        System.out.println("Kid ID: " + msg_reports.get(i));
+                        System.out.println("The Message: " + msg_reports.get(i + 1));
+                    }
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

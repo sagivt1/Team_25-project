@@ -248,6 +248,39 @@ public class Counselor extends users.User {
             throwables.printStackTrace();
         }
     }
+    public void Alerted_Kids()
+    {
+        ArrayList<String> msg_reports = new ArrayList<String>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "select msg,student_name,student_Lname,grade from alert;";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    msg_reports.add(res.getString(1));
+                    msg_reports.add(res.getString(2));
+                    msg_reports.add(res.getString(3));
+                    msg_reports.add(res.getString(4));
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        int k=1;
+        for (int j=0;j<msg_reports.size();j+=4) {
+            System.out.println(k+".");
+            System.out.println("name: "+msg_reports.get(j+1) + " " + msg_reports.get(j+2));
+            System.out.println("grade: "+msg_reports.get(j+3));
+            System.out.println("Alert: " +msg_reports.get(j));
+            k++;
+        }
+    }
 
     public void Update_Student_Grade(){
         int flag=0;

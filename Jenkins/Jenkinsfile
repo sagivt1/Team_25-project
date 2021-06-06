@@ -51,8 +51,8 @@ pipeline {
                               reportName            : "API Documentation"
                           ])
                           sh "gradle clean"
-                        }
-            }
+
+                }
         }
 
 

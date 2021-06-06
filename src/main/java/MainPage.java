@@ -506,7 +506,8 @@ public class MainPage {
             System.out.println("4.Send message to counselor");
             System.out.println("5.Show message from counselor");
             System.out.println("6.Simulation Quiz");
-            System.out.println("7.Exit");
+            System.out.println("7.Show Review");
+            System.out.println("8.Exit");
             Opt = scanM.next();
             System.out.print(newLine);
             switch (Opt) {
@@ -529,6 +530,8 @@ public class MainPage {
                     parent.Simulation_test();
                     break;
                 case "7":
+                    parent.Show_Riview();
+                case "8":
                     parent = null;
                     return;
                 default:

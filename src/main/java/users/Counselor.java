@@ -511,7 +511,7 @@ public class Counselor extends users.User {
     }
 
     public void Add_Review(){
-
+        Tests_And_Students();
         Scanner in = new Scanner(System.in);
         ArrayList<Integer> Quiz_Student_Done = new ArrayList<Integer>();
         Connection con = ZeroDawnDatabase.GetDbCon();
@@ -617,6 +617,38 @@ public class Counselor extends users.User {
         }
         System.out.println("\n\nTotal score: "+t);
 
+    }
+
+    public void Tests_And_Students(){
+        System.out.println("List of Tests made by Students: ");
+        ArrayList<String> msg_reports = new ArrayList<String>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "select test_id,user_id from start_test group by test_id;";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    msg_reports.add(res.getString(1));
+                    msg_reports.add(res.getString(2));
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        int k=1,t=0;
+        for (int j=0;j<msg_reports.size();j+=2) {
+            System.out.println(k+".");
+            System.out.println("Test Number: "+msg_reports.get(j));
+            System.out.println("Student ID: "+msg_reports.get(j+1));
+            t+=Integer.parseInt(msg_reports.get(j+1));
+            k++;
+        }
     }
 }
 

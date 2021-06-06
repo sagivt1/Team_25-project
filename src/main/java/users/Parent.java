@@ -371,4 +371,34 @@ public class Parent extends User {
             throwables.printStackTrace();
         }
     }
+
+    public void Show_Riview(){
+        ArrayList<String> msg_reports = new ArrayList<String>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "select user_id, review_for_parents from review where user_id = (select student_id from kids);";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    msg_reports.add(res.getString(1));
+                    msg_reports.add(res.getString(2));
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        int k=1;
+        for (int j=0;j<msg_reports.size();j+=4) {
+            System.out.println(k+".");
+            System.out.println("Student ID: "+msg_reports.get(j));
+            System.out.println("Review: "+msg_reports.get(j+1));
+            k++;
+        }
+    }
 }

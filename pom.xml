@@ -49,8 +49,9 @@
                 <artifactId>clover-maven-plugin</artifactId>
                 <version>4.4.1</version>
                 <configuration>
+                    <generateHtml>true</generateHtml>
+                    <generateXml>true</generateXml>
                     <includesAllSourceRoots>false</includesAllSourceRoots>
-                    <excludesList>**/ExcludedFile.groovy</excludesList>
                 </configuration>
             </plugin>
 

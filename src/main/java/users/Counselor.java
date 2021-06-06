@@ -510,7 +510,112 @@ public class Counselor extends users.User {
         }
     }
 
-    public void AlertedKids() {
+    public void Add_Review(){
+
+        Scanner in = new Scanner(System.in);
+        ArrayList<Integer> Quiz_Student_Done = new ArrayList<Integer>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        int i=0;
+        if (con == null) {
+            System.exit(1);
+        }
+        System.out.println("Enter student ID to add a review: ");
+        String S_ID=in.nextLine();
+        try{
+            String query = "select test_id from start_test where user_id =" + S_ID + ";";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    Quiz_Student_Done.add(res.getInt(1));
+                    i++;
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            System.out.println("Student not found");
+            throwables.printStackTrace();
+        }
+        Set<Integer> s = new LinkedHashSet<>(Quiz_Student_Done);
+        System.out.println("----List Of Tests----");
+        for (Integer integer : s) {
+            System.out.println(integer);
+        }
+        System.out.println("Please select test number: ");
+        int CH=in.nextInt();
+        int flag=0;
+        while(i<100) {
+            for (Integer integer : s) {
+                if(integer == CH){
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==1){
+                break;
+            }
+            System.out.println("Please select test number from this list: ");
+            System.out.println("----List Of Tests----");
+            for (Integer integ : s) {
+                System.out.println(integ);
+            }
+            CH=in.nextInt();
+        }
+        System.out.println("\n\nThe Test: ");
+        Show_Student_Ans(S_ID);
+        System.out.println();
+        System.out.println("Enter a review for school use:");
+        in.nextLine();
+        String FD = in.nextLine();
+        System.out.println("Enter a review for Parents:");
+        String FD1 = in.nextLine();
+        try {
+            String query = "INSERT IGNORE INTO review(test_id,user_id ,review, review_for_parents) VALUES(?,?,?,?)";
+            PreparedStatement stmt = con.prepareCall(query);
+            stmt.setInt(1,CH);
+            stmt.setString(2,S_ID);
+            stmt.setString(3, FD);
+            stmt.setString(4, FD1);
+            stmt.execute();
+            con.close();
+            System.out.println("Review was successfully entered");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void Show_Student_Ans(String S){
+        ArrayList<String> msg_reports = new ArrayList<String>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "select question_id,ans from start_test where user_id= "+S+";";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    msg_reports.add(res.getString(1));
+                    msg_reports.add(res.getString(2));
+                }
+                res.close();
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        int k=1,t=0;
+        for (int j=0;j<msg_reports.size();j+=2) {
+            System.out.println(k+".");
+            System.out.println("Question: "+msg_reports.get(j));
+            System.out.println("Answer: "+msg_reports.get(j+1));
+            t+=Integer.parseInt(msg_reports.get(j+1));
+            k++;
+        }
+        System.out.println("\n\nTotal score: "+t);
 
     }
 }

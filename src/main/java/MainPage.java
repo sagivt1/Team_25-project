@@ -307,7 +307,8 @@ public class MainPage {
             System.out.println("9.Show alerted kids");
             System.out.println("10.Send message to parent");
             System.out.println("11.Show messages from parents");
-            System.out.println("12.exit");
+            System.out.println("12.Add review on Quiz");
+            System.out.println("13.exit");
             Opt = scanM.next();
             switch (Opt) {
                 case "1":
@@ -356,6 +357,9 @@ public class MainPage {
                     counselor.ShowMessagesFromParents();
                     break;
                 case "12":
+                    counselor.Add_Review();
+                    break;
+                case "13":
                     counselor = null;
                     return;
                 default:

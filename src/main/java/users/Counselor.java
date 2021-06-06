@@ -15,6 +15,7 @@ import java.util.Set;
 public class Counselor extends users.User {
     ArrayList<String> All_Kids;
     ArrayList<String> Kids_Parents;
+    Scanner in = new Scanner(System.in);
 
     public Counselor() {
         All_Kids = new ArrayList<String>();
@@ -570,6 +571,17 @@ public class Counselor extends users.User {
         String FD = in.nextLine();
         System.out.println("Enter a review for Parents:");
         String FD1 = in.nextLine();
+        System.out.println("do you want to mark this student?");
+        System.out.println("press 1 for yes");
+        System.out.println("press 0 for no");
+        int p=in.nextInt();
+        while (p!=1 && p!=0){
+            System.out.println("You entered an incorrect number, please select again:");
+            System.out.println("do you want to mark this student?");
+            System.out.println("press 1 for yes");
+            System.out.println("press 0 for no");
+            p=in.nextInt();
+        }
         try {
             String query = "INSERT IGNORE INTO review(test_id,user_id ,review, review_for_parents) VALUES(?,?,?,?)";
             PreparedStatement stmt = con.prepareCall(query);
@@ -578,8 +590,21 @@ public class Counselor extends users.User {
             stmt.setString(3, FD);
             stmt.setString(4, FD1);
             stmt.execute();
-            con.close();
+
             System.out.println("Review was successfully entered");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        try {
+            String query2 = "INSERT IGNORE INTO student_monitoring(user_id, marked, care, test_id) VALUES(?,?,?,?);";
+            PreparedStatement stmt1 = con.prepareCall(query2);
+            stmt1.setString(1,S_ID);
+            stmt1.setInt(2,p);
+            stmt1.setString(3, FD);
+            stmt1.setInt(4, CH);
+            stmt1.execute();
+            con.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -648,6 +673,106 @@ public class Counselor extends users.User {
             System.out.println("Student ID: "+msg_reports.get(j+1));
             t+=Integer.parseInt(msg_reports.get(j+1));
             k++;
+        }
+    }
+
+    public void Monitoring_Students(){
+        System.out.println("List of Marked student:");
+        ArrayList<String> msg_reports = new ArrayList<String>();
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+        try{
+            String query = "select User_id,care from student_monitoring where marked=1;";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    msg_reports.add(res.getString(1));
+                    msg_reports.add(res.getString(2));
+                }
+                res.close();
+                if (msg_reports.size() == 0) {
+                    System.out.println("there is no marked students");
+                }
+            }
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        int k=1;
+        for (int j=0;j<msg_reports.size();j+=2) {
+            System.out.println(k+".");
+            System.out.println("Student ID: "+msg_reports.get(j));
+            System.out.println("Action required: "+msg_reports.get(j+1));
+            k++;
+        }
+        System.out.println("Please enter the ID number of the student you would like to address: ");
+        String CH0=in.nextLine();
+        System.out.println("Please select one of the following options:\n" +
+                "1. To edit student care press 1\n" +
+                "2. To change the student marking press 2\n" +
+                "3. To update the student parent press 3");
+        int CH1=in.nextInt();
+
+        if(CH1==1) {
+            try {
+                System.out.println("Please enter new review: ");
+                in.nextLine();
+                String CH2 = in.nextLine();
+                String query = "update student_monitoring set care=? where user_id=?;";
+                PreparedStatement stmt = con.prepareCall(query);
+                stmt.setString(1,CH2);
+                stmt.setString(2,CH0);
+                stmt.execute();
+                con.close();
+                System.out.println("successfully updated!");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+        if(CH1==2) {
+            System.out.println("To add the student to the list of marked students Press 1, " +
+                    "To remove the student from the list of marked students Press 0.");
+            in.nextLine();
+            String CH5=in.nextLine();
+            while (!CH5.equals("1") && !CH5.equals("0"))
+            {
+                System.out.println("You entered an incorrect number, please select again:");
+                System.out.println("To add the student to the list of marked students Press 1, " +
+                        "To remove the student from the list of marked students Press 0.");
+                CH5=in.nextLine();
+            }
+            try {
+                String query = "update student_monitoring set marked=? where user_id=?;";
+                PreparedStatement stmt = con.prepareCall(query);
+                stmt.setInt(1,Integer.parseInt(CH5));
+                stmt.setString(2,CH0);
+                stmt.execute();
+                con.close();
+                System.out.println("Change made successfully!");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        if(CH1==3)
+        {
+            System.out.println("What would you like to update the parent on:");
+            in.nextLine();
+            String CH4=in.nextLine();
+            try {
+                String query = "update student_monitoring set update_parents=? where user_id=?;";
+                PreparedStatement stmt = con.prepareCall(query);
+                stmt.setString(1,CH4);
+                stmt.setString(2,CH0);
+                stmt.execute();
+                con.close();
+                System.out.println("parents update successfully!");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 }

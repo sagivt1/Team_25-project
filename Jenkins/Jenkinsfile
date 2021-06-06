@@ -1,16 +1,6 @@
 pipeline {
     agent { docker { image 'maven:3.8.1' } }
 
-
-        options {
-            timestamps()
-        }
-
-        environment {
-            IMAGE = readMavenPom().getArtifactId()
-            VERSION = readMavenPom().getVersion()
-        }
-
     stages {
         stage('build') {
             steps {

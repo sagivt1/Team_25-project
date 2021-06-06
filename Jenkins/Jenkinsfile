@@ -18,17 +18,23 @@ pipeline {
             }
         }
 
+        stage('JaCoCo') {
+             steps {
+                 echo 'Code Coverage'
+                 jacoco()
+             }
+        }
 
         stage('Package') {
-                    steps {
-                        echo 'Packaging'
-                        bat 'mvn package -DskipTests'
-                    }
+               steps {
+                   echo 'Packaging'
+                   bat 'mvn package'
+               }
+        }
+        stage('Deploy') {
+                steps {
+                    echo '## Deploy To Server ##'
                 }
-                stage('Deploy') {
-                    steps {
-                        echo '## TODO DEPLOYMENT ##'
-                    }
         }
     }
 

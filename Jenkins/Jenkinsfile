@@ -4,7 +4,7 @@ pipeline {
         stage('build') {
             steps {
                 sh 'mvn --version'
-                sh 'mvn package'
+                sh 'mvn package -Dmaven.test.skip=true'
             }
         }
         stage('test'){
@@ -28,7 +28,7 @@ pipeline {
         stage('Package') {
                steps {
                    echo 'Packaging'
-                   bat 'mvn package'
+                   sh 'mvn package'
                }
         }
         stage('Deploy') {

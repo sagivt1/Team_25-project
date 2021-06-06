@@ -1,6 +1,5 @@
-package Test;
+package quiz;
 
-import Database.ZeroDawnDatabase;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,12 +7,7 @@ import org.junit.jupiter.api.Test;
 import test.Question;
 import test.Quiz;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-class TestQuiz {
+public class TestQuiz {
 
     int Id;
     Quiz quiz;

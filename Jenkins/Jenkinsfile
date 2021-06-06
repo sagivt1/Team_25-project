@@ -24,7 +24,7 @@ pipeline {
                  sh 'mvn clean clover:setup test clover:aggregate clover:clover'
                  step([
                      $class: 'CloverPublisher',
-                     cloverReportDir: 'target/site/clover',
+                     cloverReportDir: 'target/site/clover/',
                      cloverReportFileName: 'clover.xml',
                      healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80],
                      unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50],

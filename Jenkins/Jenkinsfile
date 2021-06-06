@@ -17,23 +17,12 @@ pipeline {
                 }
             }
         }
-        stage('test'){
+        stage('jacoco'){
             steps{
-                sh 'mvn clean test'
+               echo 'Code Coverage'
+               jacoco()
             }
-            post {
-                always {
-                   jacoco(
-                       execPattern: '**/target/code-coverage/**.exec',
-                       classPattern: '**/target/classes',
-                       sourcePattern: '**/src',
-                       inclusionPattern: 'com/company/**',
-                       changeBuildStatus: true,
-                       minimumInstructionCoverage: '70',
-                       maximumInstructionCoverage: '80'
-                   )
-                }
-            }
+
         }
 
 

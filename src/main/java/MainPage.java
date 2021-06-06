@@ -321,7 +321,7 @@ public class MainPage {
                     counselor.RemoveOrHaltQuiz();
                     break;
                 case "4":
-                    //marked student function
+                    counselor.Monitoring_Students();
                     break;
                 case "5":
                     System.out.println("enter your selection:");
@@ -507,7 +507,8 @@ public class MainPage {
             System.out.println("5.Show message from counselor");
             System.out.println("6.Simulation Quiz");
             System.out.println("7.Show Review");
-            System.out.println("8.Exit");
+            System.out.println("8.Student status");
+            System.out.println("9.Exit");
             Opt = scanM.next();
             System.out.print(newLine);
             switch (Opt) {
@@ -533,6 +534,8 @@ public class MainPage {
                     parent.Show_Riview();
                     break;
                 case "8":
+                    parent.Get_Status();
+                case "9":
                     parent = null;
                     return;
                 default:

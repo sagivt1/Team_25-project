@@ -21,6 +21,7 @@ pipeline {
         stage('JaCoCo') {
              steps {
                  echo 'Code Coverage'
+                 sh 'mvn clean test'
                  jacoco()
              }
         }

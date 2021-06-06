@@ -18,6 +18,12 @@ pipeline {
             }
         }
 
+        stage('Code Coverage') {
+             steps {
+                 echo 'Code Coverage'
+                 sh 'mvn clean clover:setup test clover:aggregate clover:clover'
+             }
+        }
        
         stage('Package') {
                steps {

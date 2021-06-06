@@ -531,6 +531,7 @@ public class MainPage {
                     break;
                 case "7":
                     parent.Show_Riview();
+                    break;
                 case "8":
                     parent = null;
                     return;

@@ -18,7 +18,7 @@ public class ZeroDawnDatabase {
         try {
 
             String url = "jdbc:mysql://freedb.tech/freedbtech_zerodawn?useSSL=false";
-            String user = "root";
+            String user = "freedbtech_zerodawnuser";
             String password = "!bB7WJAyj%O!";//Edit to your mysql password
 
 

@@ -19,7 +19,7 @@ public class ZeroDawnDatabase {
 
             String url = "jdbc:mysql://freedb.tech/freedbtech_zerodawn?useSSL=false";
             String user = "freedbtech_zerodawnuser";
-            String password = "!bB7WJAyj%O!";//Edit to your mysql password
+            String password = "!bB7WJAyj%O!";
 
 
             conn = DriverManager.getConnection(url, user, password);

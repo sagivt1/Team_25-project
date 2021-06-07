@@ -1,15 +1,16 @@
 pipeline {
     agent { docker { image 'maven:3.8.1' } }
+
     stages {
         stage('build') {
             steps {
                 sh 'mvn --version'
-                sh 'mvn package'
+                sh 'mvn package -Dmaven.test.skip=true'
             }
         }
         stage('test'){
             steps{
-                sh 'mvn test'
+                sh 'mvn clean test'
             }
             post {
                 always {
@@ -17,6 +18,47 @@ pipeline {
                 }
             }
         }
+
+        stage('Code Coverage') {
+             steps {
+                 echo 'Code Coverage'
+                 sh 'mvn clean clover:setup test clover:aggregate clover:clover'
+                 script {
+                     def data = readFile(file: 'target/site/clover/clover.xml')
+                     println(data)
+                 }
+             }
+        }
+
+        stage('Package') {
+               steps {
+                   echo 'Packaging'
+                   sh 'mvn package'
+               }
+        }
+        stage('Deploy') {
+                steps {
+                    echo '## Deploy To Server ##'
+                }
+        }
     }
+
+    post {
+            always {
+                echo 'JENKINS PIPELINE'
+            }
+            success {
+                echo 'JENKINS PIPELINE SUCCESSFUL'
+            }
+            failure {
+                echo 'JENKINS PIPELINE FAILED'
+            }
+            unstable {
+                echo 'JENKINS PIPELINE WAS MARKED AS UNSTABLE'
+            }
+            changed {
+                echo 'JENKINS PIPELINE STATUS HAS CHANGED SINCE LAST EXECUTION'
+            }
+        }
 } 
 

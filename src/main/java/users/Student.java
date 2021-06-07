@@ -97,11 +97,11 @@ public class Student extends User {
         System.out.println("to exit Press 0");
         CH = in.nextInt();
         while (CH != 0 && CH != 1) {
-                System.out.println("You have selected a wrong number, please select again:");
-                CH = in.nextInt();
-                System.out.println("to start a test Press 1");
-                System.out.println("to exit Press 0");
-            }
+            System.out.println("You have selected a wrong number, please select again:");
+            CH = in.nextInt();
+            System.out.println("to start a test Press 1");
+            System.out.println("to exit Press 0");
+        }
         if (CH == 1) {
             ArrayList<Quiz> Quizzes = Quiz.GetQuizList();
             System.out.println("----List Of Tests----");
@@ -112,47 +112,37 @@ public class Student extends User {
                     id_test.add(quiz.getId());
                 }
             }
-            int choice;
-            int j=0,flag1=0;
-            System.out.println("Choose test:");
-            Quiz quiz = new Quiz();
-            while (j<1) {
-                choice = in.nextInt();
-                for (int num : id_test) {
-                    if (num == choice) {
-                        flag1=1;
-                        quiz.GetSpecificQuizFromDB(choice);
-                        if (quiz.getId() == 0) {
-                            System.out.println("Invalid Test ID");
-                            return AnswersCntainer;
+            if (id_test.size() > 0) {
+                int choice;
+                int j = 0, flag1 = 0;
+                System.out.println("Choose test:");
+                Quiz quiz = new Quiz();
+                while (j < 1) {
+                    choice = in.nextInt();
+                    for (int num : id_test) {
+                        if (num == choice) {
+                            flag1 = 1;
+                            quiz.GetSpecificQuizFromDB(choice);
+                            if (quiz.getId() == 0) {
+                                System.out.println("Invalid Test ID");
+                                return AnswersCntainer;
+                            }
                         }
                     }
+                    if (flag1 == 1) {
+                        break;
+                    }
+                    System.out.println("You entered a wrong number, please select again");
                 }
-                if (flag1 == 1) {
-                    break;
-                }
-                System.out.println("You entered a wrong number, please select again");
-            }
 
-            int a = 1;
-            for (int i = 0; i < quiz.getQuestions().size(); i++) {
-                int Q_id = quiz.getQuestions().get(i).getId();
-                String Q = quiz.getQuestions().get(i).getQuestion();
-                int quiz_id = quiz.getId();
-                AnswersCntainer[i][0] = String.valueOf(quiz_id);
-                AnswersCntainer[i][1] = String.valueOf(UserID);
-                AnswersCntainer[i][2] = String.valueOf(Q_id);
-                System.out.println("Q number " + a + " : ");
-                System.out.println(Q);
-                System.out.println("Please select an answer: ");
-                System.out.println("1. is a ");
-                System.out.println("2. as a ");
-                System.out.println("3. dont know");
-                System.out.println("4. all");
-                int Ans = in.nextInt();
-                while(Ans!=1 && Ans!=2 && Ans!=3 && Ans!=4)
-                {
-                    System.out.println("You have selected a wrong number, please select again:");
+                int a = 1;
+                for (int i = 0; i < quiz.getQuestions().size(); i++) {
+                    int Q_id = quiz.getQuestions().get(i).getId();
+                    String Q = quiz.getQuestions().get(i).getQuestion();
+                    int quiz_id = quiz.getId();
+                    AnswersCntainer[i][0] = String.valueOf(quiz_id);
+                    AnswersCntainer[i][1] = String.valueOf(UserID);
+                    AnswersCntainer[i][2] = String.valueOf(Q_id);
                     System.out.println("Q number " + a + " : ");
                     System.out.println(Q);
                     System.out.println("Please select an answer: ");
@@ -160,22 +150,8 @@ public class Student extends User {
                     System.out.println("2. as a ");
                     System.out.println("3. dont know");
                     System.out.println("4. all");
-                    Ans = in.nextInt();
-                }
-                AnswersCntainer[i][3] = String.valueOf(Ans);
-                AnswersCntainer[i][4] = Q;
-                int flag=1;
-                int temp_choice=0;
-                while (flag==1) {
-                    System.out.println("if you want to update your last answer press 1");
-                    System.out.println("if you want to continue to the next Question press 2");
-                    temp_choice = in.nextInt();
-                    if(temp_choice==1 || temp_choice==2){
-                        flag=0;
-                    }
-                }
-                if(temp_choice==1){
-                    while(Ans!=1 && Ans!=2 && Ans!=3 && Ans!=4) {
+                    int Ans = in.nextInt();
+                    while (Ans != 1 && Ans != 2 && Ans != 3 && Ans != 4) {
                         System.out.println("You have selected a wrong number, please select again:");
                         System.out.println("Q number " + a + " : ");
                         System.out.println(Q);
@@ -185,21 +161,44 @@ public class Student extends User {
                         System.out.println("3. dont know");
                         System.out.println("4. all");
                         Ans = in.nextInt();
-                        AnswersCntainer[i][3] = String.valueOf(Ans);
+                    }
+                    AnswersCntainer[i][3] = String.valueOf(Ans);
+                    AnswersCntainer[i][4] = Q;
+                    int flag = 1;
+                    int temp_choice = 0;
+                    while (flag == 1) {
+                        System.out.println("if you want to update your last answer press 1");
+                        System.out.println("if you want to continue to the next Question press 2");
+                        temp_choice = in.nextInt();
+                        if (temp_choice == 1 || temp_choice == 2) {
+                            flag = 0;
+                        }
+                    }
+                    if (temp_choice == 1) {
+                        while (Ans != 1 && Ans != 2 && Ans != 3 && Ans != 4) {
+                            System.out.println("You have selected a wrong number, please select again:");
+                            System.out.println("Q number " + a + " : ");
+                            System.out.println(Q);
+                            System.out.println("Please select an answer: ");
+                            System.out.println("1. is a ");
+                            System.out.println("2. as a ");
+                            System.out.println("3. dont know");
+                            System.out.println("4. all");
+                            Ans = in.nextInt();
+                            AnswersCntainer[i][3] = String.valueOf(Ans);
+                        }
+                    }
+                    a++;
+                    if (i + 1 == quiz.getQuestions().size()) {
+                        System.out.println("You have completed the quiz ");
                     }
                 }
-                a++;
-                if(i+1==quiz.getQuestions().size())
-                {
-                    System.out.println("You have completed the quiz ");
-                }
+                return AnswersCntainer;
             }
-            return AnswersCntainer;
         }
-        else{
             return AnswersCntainer;
-        }
     }
+
 
 
     public void start_test2()

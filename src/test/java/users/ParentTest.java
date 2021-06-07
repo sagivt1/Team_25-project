@@ -50,11 +50,26 @@ class ParentTest {
         parent.SignUp("000000000", "123456", "A", "B", Date.valueOf("1990-6-25"), "abcd@gmail.com" );
         Parent GetFromDb = new Parent();
         Student student = new Student();
-        student.SignUp("111111111","123456","ADik","B",Date.valueOf("2013-12-05"),"Kid@gmail.com", 5);
+        student.SignUp("111111111","123456","AKid","B",Date.valueOf("2013-12-05"),"Kid@gmail.com", 5);
         parent.AddMyChild("000000000","111111111");
         parent.AddKidsToArray();
         Assert.assertEquals(parent.New_Kids.get(0),"111111111");
-
-
     }
+
+    @Test
+    void RemoveMyChild(){
+
+        Parent parent = new Parent();
+        parent.SignUp("000000000", "123456", "A", "B", Date.valueOf("1990-6-25"), "abcd@gmail.com" );
+        Parent GetFromDb = new Parent();
+        Student student = new Student();
+        student.SignUp("111111111","123456","AKid","B",Date.valueOf("2013-12-05"),"Kid@gmail.com", 5);
+        parent.AddMyChild("000000000","111111111");
+        parent.DeleteChildFromDB("000000000","111111111");
+        parent.AddKidsToArray();
+        Assert.assertEquals(parent.New_Kids.size(),0);
+    }
+
+
+
 }

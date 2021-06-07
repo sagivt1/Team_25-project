@@ -382,7 +382,7 @@ public class Counselor extends users.User {
             System.exit(1);
         }
         try {
-            String query = "SELECT student_id FROM kids";
+            String query = "SELECT distinct student_id FROM kids";
             PreparedStatement stmt = con.prepareCall(query);
             ResultSet res = stmt.executeQuery(query);
             while (res.next()) {

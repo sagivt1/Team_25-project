@@ -27,7 +27,7 @@ class ParentTest {
         String query = "DELETE FROM users WHERE id = '000000000'; ";
         PreparedStatement stmt = con.prepareCall(query);
         stmt.execute();
-        query = "DELETE FROM users WHERE id = '000000000'; ";
+        query = "DELETE FROM users WHERE id = '111111111'; ";
         stmt = con.prepareCall(query);
         stmt.execute();
 
@@ -71,5 +71,13 @@ class ParentTest {
     }
 
 
+    @Test
+    void checkIfStudent() {
 
+        Parent parent = new Parent();
+        parent.SignUp("000000000", "123456", "A", "B", Date.valueOf("1990-6-25"), "abcd@gmail.com" );
+        Student student = new Student();
+        student.SignUp("111111111", "123456", "A", "B", Date.valueOf("2013-12-05"), "abcd@gmail.com", 2 );
+        Assert.assertTrue(parent.CheckIfStudent("111111111"));
+    }
 }

@@ -260,13 +260,16 @@ public class Counselor extends users.User {
             String query = "select msg,student_name,student_Lname,grade from alert;";
             PreparedStatement stmt = con.prepareCall(query);
             boolean HadResult = stmt.execute();
-            if(HadResult){
+            if(HadResult) {
                 ResultSet res = stmt.getResultSet();
-                while(res.next()){
+                while (res.next()) {
                     msg_reports.add(res.getString(1));
                     msg_reports.add(res.getString(2));
                     msg_reports.add(res.getString(3));
                     msg_reports.add(res.getString(4));
+                }
+                if (msg_reports.size() == 0) {
+                    System.out.println("there is no Students to show");
                 }
                 res.close();
             }
@@ -338,33 +341,37 @@ public class Counselor extends users.User {
         }
     }
 
-    public void Show_Student_list(){
+    public void Show_Student_list() {
         Scanner in = new Scanner(System.in);
         ArrayList<String> Student_list = new ArrayList<String>();
         Connection con = ZeroDawnDatabase.GetDbCon();
-        int i=0;
+        int i = 0;
         if (con == null) {
             System.exit(1);
         }
-        try{
+        try {
             String query = "select user_id from student;";
             PreparedStatement stmt = con.prepareCall(query);
             boolean HadResult = stmt.execute();
-            if(HadResult){
+            if (HadResult) {
                 ResultSet res = stmt.getResultSet();
-                while(res.next()){
+                while (res.next()) {
                     Student_list.add(res.getString(1));
                     i++;
                 }
                 res.close();
+
             }
-        }catch (SQLException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         Set<String> s = new LinkedHashSet<>(Student_list);
         System.out.println("----ID List Of Students----");
         for (String string : s) {
             System.out.println(string);
+        }
+        if (Student_list.size() == 0) {
+            System.out.println("there is no student to show");
         }
     }
 
@@ -516,7 +523,7 @@ public class Counselor extends users.User {
         Scanner in = new Scanner(System.in);
         ArrayList<Integer> Quiz_Student_Done = new ArrayList<Integer>();
         Connection con = ZeroDawnDatabase.GetDbCon();
-        int i=0;
+        int i=0,flag1=0;
         if (con == null) {
             System.exit(1);
         }
@@ -533,80 +540,86 @@ public class Counselor extends users.User {
                     i++;
                 }
                 res.close();
+                if (Quiz_Student_Done.size() == 0) {
+                    System.out.println("No student with this ID has taken a test");
+                    flag1=1;
+                }
             }
         }catch (SQLException throwables) {
             System.out.println("Student not found");
             throwables.printStackTrace();
         }
-        Set<Integer> s = new LinkedHashSet<>(Quiz_Student_Done);
-        System.out.println("----List Of Tests----");
-        for (Integer integer : s) {
-            System.out.println(integer);
-        }
-        System.out.println("Please select test number: ");
-        int CH=in.nextInt();
-        int flag=0;
-        while(i<100) {
+        if(flag1==0) {
+            Set<Integer> s = new LinkedHashSet<>(Quiz_Student_Done);
+            System.out.println("----List Of Tests----");
             for (Integer integer : s) {
-                if(integer == CH){
-                    flag=1;
+                System.out.println(integer);
+            }
+            System.out.println("Please select test number: ");
+            int CH = in.nextInt();
+            int flag = 0;
+            while (i < 100) {
+                for (Integer integer : s) {
+                    if (integer == CH) {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 1) {
                     break;
                 }
+                System.out.println("Please select test number from this list: ");
+                System.out.println("----List Of Tests----");
+                for (Integer integ : s) {
+                    System.out.println(integ);
+                }
+                CH = in.nextInt();
             }
-            if(flag==1){
-                break;
-            }
-            System.out.println("Please select test number from this list: ");
-            System.out.println("----List Of Tests----");
-            for (Integer integ : s) {
-                System.out.println(integ);
-            }
-            CH=in.nextInt();
-        }
-        System.out.println("\n\nThe Test: ");
-        Show_Student_Ans(S_ID);
-        System.out.println();
-        System.out.println("Enter a review for school use:");
-        in.nextLine();
-        String FD = in.nextLine();
-        System.out.println("Enter a review for Parents:");
-        String FD1 = in.nextLine();
-        System.out.println("do you want to mark this student?");
-        System.out.println("press 1 for yes");
-        System.out.println("press 0 for no");
-        int p=in.nextInt();
-        while (p!=1 && p!=0){
-            System.out.println("You entered an incorrect number, please select again:");
+            System.out.println("\n\nThe Test: ");
+            Show_Student_Ans(S_ID);
+            System.out.println();
+            System.out.println("Enter a review for school use:");
+            in.nextLine();
+            String FD = in.nextLine();
+            System.out.println("Enter a review for Parents:");
+            String FD1 = in.nextLine();
             System.out.println("do you want to mark this student?");
             System.out.println("press 1 for yes");
             System.out.println("press 0 for no");
-            p=in.nextInt();
-        }
-        try {
-            String query = "INSERT IGNORE INTO review(test_id,user_id ,review, review_for_parents) VALUES(?,?,?,?)";
-            PreparedStatement stmt = con.prepareCall(query);
-            stmt.setInt(1,CH);
-            stmt.setString(2,S_ID);
-            stmt.setString(3, FD);
-            stmt.setString(4, FD1);
-            stmt.execute();
+            int p = in.nextInt();
+            while (p != 1 && p != 0) {
+                System.out.println("You entered an incorrect number, please select again:");
+                System.out.println("do you want to mark this student?");
+                System.out.println("press 1 for yes");
+                System.out.println("press 0 for no");
+                p = in.nextInt();
+            }
+            try {
+                String query = "INSERT IGNORE INTO review(test_id,user_id ,review, review_for_parents) VALUES(?,?,?,?)";
+                PreparedStatement stmt = con.prepareCall(query);
+                stmt.setInt(1, CH);
+                stmt.setString(2, S_ID);
+                stmt.setString(3, FD);
+                stmt.setString(4, FD1);
+                stmt.execute();
 
-            System.out.println("Review was successfully entered");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+                System.out.println("Review was successfully entered");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
 
-        try {
-            String query2 = "INSERT IGNORE INTO student_monitoring(user_id, marked, care, test_id) VALUES(?,?,?,?);";
-            PreparedStatement stmt1 = con.prepareCall(query2);
-            stmt1.setString(1,S_ID);
-            stmt1.setInt(2,p);
-            stmt1.setString(3, FD);
-            stmt1.setInt(4, CH);
-            stmt1.execute();
-            con.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            try {
+                String query2 = "INSERT IGNORE INTO student_monitoring(user_id, marked, care, test_id) VALUES(?,?,?,?);";
+                PreparedStatement stmt1 = con.prepareCall(query2);
+                stmt1.setString(1, S_ID);
+                stmt1.setInt(2, p);
+                stmt1.setString(3, FD);
+                stmt1.setInt(4, CH);
+                stmt1.execute();
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
     }
@@ -652,7 +665,7 @@ public class Counselor extends users.User {
             System.exit(1);
         }
         try{
-            String query = "select test_id,user_id from start_test group by test_id;";
+            String query = "SELECT DISTINCT test_id,user_id from start_test;";
             PreparedStatement stmt = con.prepareCall(query);
             boolean HadResult = stmt.execute();
             if(HadResult){
@@ -677,6 +690,7 @@ public class Counselor extends users.User {
     }
 
     public void Monitoring_Students(){
+        int flag=1;
         System.out.println("List of Marked student:");
         ArrayList<String> msg_reports = new ArrayList<String>();
         Connection con = ZeroDawnDatabase.GetDbCon();
@@ -696,6 +710,7 @@ public class Counselor extends users.User {
                 res.close();
                 if (msg_reports.size() == 0) {
                     System.out.println("there is no marked students");
+                    flag=0;
                 }
             }
         }catch (SQLException throwables) {
@@ -708,13 +723,61 @@ public class Counselor extends users.User {
             System.out.println("Action required: "+msg_reports.get(j+1));
             k++;
         }
-        System.out.println("Please enter the ID number of the student you would like to address: ");
-        String CH0=in.nextLine();
-        System.out.println("Please select one of the following options:\n" +
-                "1. To edit student care press 1\n" +
-                "2. To change the student marking press 2\n" +
-                "3. To update the student parent press 3");
-        int CH1=in.nextInt();
+
+        if(flag==0)
+        {
+            System.out.println("To change the student marking press 1");
+            System.out.println("To Exit Press 2");
+            int CH1=in.nextInt();
+
+            while (CH1!=2 && CH1!=1){
+                System.out.println("Select one of the following options: ");
+                System.out.println("To change the student marking press 1");
+                System.out.println("To Exit Press 2");
+                CH1=in.nextInt();
+            }
+            if(CH1==1) {
+                System.out.println("Please enter the ID number of the student you would like to address: ");
+                String CH0 = in.nextLine();
+                System.out.println("To add the student to the list of marked students Press 1, " +
+                        "To remove the student from the list of marked students Press 0.");
+                in.nextLine();
+                String CH5=in.nextLine();
+                while (!CH5.equals("1") && !CH5.equals("0"))
+                {
+                    System.out.println("You entered an incorrect number, please select again:");
+                    System.out.println("To add the student to the list of marked students Press 1, " +
+                            "To remove the student from the list of marked students Press 0.");
+                    CH5=in.nextLine();
+                }
+                try {
+                    String query = "update student_monitoring set marked=? where user_id=?;";
+                    PreparedStatement stmt = con.prepareCall(query);
+                    stmt.setInt(1,Integer.parseInt(CH5));
+                    stmt.setString(2,CH0);
+                    stmt.execute();
+                    con.close();
+                    System.out.println("Change made successfully!");
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+            System.out.println("Please enter the ID number of the student you would like to address: ");
+            String CH0 = in.nextLine();
+            System.out.println("Please select one of the following options:\n" +
+                    "1. To edit student care press 1\n" +
+                    "2. To change the student marking press 2\n" +
+                    "3. To update the student parent press 3");
+            int CH1 = in.nextInt();
+
+            while (CH1 != 1 && CH1 != 2 && CH1 != 3) {
+                System.out.println("Please select one of the following options:\n" +
+                        "1. To edit student care press 1\n" +
+                        "2. To change the student marking press 2\n" +
+                        "3. To update the student parent press 3");
+                CH1 = in.nextInt();
+            }
 
         if(CH1==1) {
             try {

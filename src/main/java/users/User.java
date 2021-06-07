@@ -11,12 +11,12 @@ User basic class
 public class User {
 
 
-    protected static String UserID;
-    protected String password;
-    protected String lname;
-    protected String fname;
-    protected Date birth_date;
-    protected String email;
+    String UserID;
+    String password;
+    String lname;
+    String fname;
+    Date birth_date;
+    String email;
 
     public User() {
     }

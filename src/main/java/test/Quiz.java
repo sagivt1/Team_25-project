@@ -357,6 +357,36 @@ public class Quiz {
 
     }
 
+
+    public static ArrayList<Quiz> GetQuizListByGrade(int G){
+
+        ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();
+
+        Connection con = ZeroDawnDatabase.GetDbCon();
+        if (con == null) {
+            System.exit(1);
+        }
+
+        try{
+            String query = "select test_id, is_active, test_name, grade from test where grade="+G+";";
+            PreparedStatement stmt = con.prepareCall(query);
+            boolean HadResult = stmt.execute();
+            if(HadResult){
+                ResultSet res = stmt.getResultSet();
+                while(res.next()){
+                    Quizzes.add(new Quiz(res.getInt(1), res.getBoolean(2), res.getString(3),res.getInt(4)));
+                }
+                res.close();
+            }
+            con.close();
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return Quizzes;
+
+    }
+
     public void EditQuestions(){
 
         Scanner in = new Scanner(System.in);

@@ -184,7 +184,7 @@ public class Counselor extends users.User {
         ArrayList<Integer> Quiz_with_feedback = new ArrayList<Integer>();
         String[] strin = new String[1000];
         Connection con = ZeroDawnDatabase.GetDbCon();
-        int i=0,k=0;
+        int i=0,k=0,flag3=0;
         if (con == null) {
             System.exit(1);
         }
@@ -198,55 +198,61 @@ public class Counselor extends users.User {
                     Quiz_with_feedback.add(res.getInt(1));
                 }
                 res.close();
+                if(Quiz_with_feedback.size()==0){
+                    System.out.println("there is no feedback to show");
+                    flag3=1;
+                }
             }
         }catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        Set<Integer> s = new LinkedHashSet<>(Quiz_with_feedback);
-        System.out.println("----List Of Tests----");
-        for (Integer integer : s) {
-            System.out.println(integer);
-        }
-        System.out.println("Please select test number to see the feedback: ");
-        int CH=in.nextInt();
-        int flag=0;
-        while(i<1) {
+        if(flag3==0) {
+            Set<Integer> s = new LinkedHashSet<>(Quiz_with_feedback);
+            System.out.println("----List Of Tests----");
             for (Integer integer : s) {
-                if(integer == CH){
-                    flag=1;
+                System.out.println(integer);
+            }
+            System.out.println("Please select test number to see the feedback: ");
+            int CH = in.nextInt();
+            int flag = 0;
+            while (i < 1) {
+                for (Integer integer : s) {
+                    if (integer == CH) {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 1) {
                     break;
                 }
-            }
-            if(flag==1){
-                break;
-            }
-            System.out.println("Please select test number from this list: ");
-            System.out.println("----List Of Tests----");
-            for (Integer integ : s) {
-                System.out.println(integ);
-            }
-            CH=in.nextInt();
-        }
-        try{
-            String query = "select * from feedback where test_id=" + CH + ";";
-            PreparedStatement stmt = con.prepareCall(query);
-            boolean HadResult = stmt.execute();
-            if(HadResult){
-                ResultSet res = stmt.getResultSet();
-                while(res.next()){
-                    strin[i]=(res.getString(2));
-                    i++;
+                System.out.println("Please select test number from this list: ");
+                System.out.println("----List Of Tests----");
+                for (Integer integ : s) {
+                    System.out.println(integ);
                 }
-                res.close();
-                System.out.println("The Feedbacks: ");
-                while (k<i){
-                    int t=k+1;
-                    System.out.println(t+"."+strin[k]);
-                    k++;
-                }
+                CH = in.nextInt();
             }
-        }catch (SQLException throwables) {
-            throwables.printStackTrace();
+            try {
+                String query = "select * from feedback where test_id=" + CH + ";";
+                PreparedStatement stmt = con.prepareCall(query);
+                boolean HadResult = stmt.execute();
+                if (HadResult) {
+                    ResultSet res = stmt.getResultSet();
+                    while (res.next()) {
+                        strin[i] = (res.getString(2));
+                        i++;
+                    }
+                    res.close();
+                    System.out.println("The Feedbacks: ");
+                    while (k < i) {
+                        int t = k + 1;
+                        System.out.println(t + "." + strin[k]);
+                        k++;
+                    }
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
     public void Alerted_Kids()

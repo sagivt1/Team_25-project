@@ -23,10 +23,14 @@ pipeline {
              steps {
                  echo 'Code Coverage'
                  sh 'mvn clean clover:setup test clover:aggregate clover:clover'
-                 script {
-                     def data = readFile(file: 'target/site/clover/clover.xml')
-                     println(data)
-                 }
+                 step([
+                     $class: 'CloverPublisher',
+                     cloverReportDir: 'target/site',
+                     cloverReportFileName: 'clover.xml',
+                     healthyTarget: [methodCoverage: 70],
+                     unhealthyTarget: [methodCoverage: 50],
+                     failingTarget: [methodCoverage: 0]
+                   ])
              }
         }
 

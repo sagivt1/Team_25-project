@@ -535,6 +535,7 @@ public class MainPage {
                     break;
                 case "8":
                     parent.Get_Status();
+                    break;
                 case "9":
                     parent = null;
                     return;

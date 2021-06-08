@@ -270,9 +270,7 @@ public class Student extends User {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        }
-
-
+    }
 
     public void Warn_about_friend_in_distress()
     {
@@ -292,8 +290,7 @@ public class Student extends User {
         System.out.println("What you would like to report on: ");
         String report = in.nextLine();
         try {
-            String query = "INSERT IGNORE INTO Alert(msg,user_id, student_name, student_Lname , grade) " +
-                    "VALUES(?,?,?,?,?)";
+            String query = "INSERT IGNORE INTO report(msg,user_id, student_name, student_Lname , grade) VALUES(?,?,?,?,?)";
             PreparedStatement stmt = con.prepareCall(query);
             stmt.setString(1,report);
             stmt.setString(2, UserID);

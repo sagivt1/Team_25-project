@@ -257,7 +257,7 @@ public class Counselor extends users.User {
             System.exit(1);
         }
         try{
-            String query = "select msg,student_name,student_Lname,grade from alert;";
+            String query = "select msg,student_name,student_Lname,grade from report;";
             PreparedStatement stmt = con.prepareCall(query);
             boolean HadResult = stmt.execute();
             if(HadResult) {

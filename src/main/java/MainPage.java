@@ -445,6 +445,9 @@ public class MainPage {
         tests = new ArrayList<Integer>();
         tests.clear();
         tests = GetTestsByGrade(kidGrade);
+        if (tests.size() == 0) {
+            return false;
+        }
         ArrayList<Integer> kidTests;
         kidTests = new ArrayList<Integer>();
         kidTests.clear();

@@ -110,11 +110,12 @@ public class Quiz {
             String question;
 
             do{
-                System.out.println("Enter the Question");
-                question = in.next();
                 in.nextLine();
+                System.out.println("Enter the Question");
+                question = in.nextLine();
                 System.out.println("Press Y to confirm");
                 confirm = in.next();
+                in.nextLine();
                 confirm = confirm.toLowerCase();
             }while(!confirm.equals("y"));
 

@@ -27,8 +27,8 @@ pipeline {
                      $class: 'CloverPublisher',
                      cloverReportDir: 'target/site',
                      cloverReportFileName: 'clover.xml',
-                     healthyTarget: [methodCoverage: 70],
-                     unhealthyTarget: [methodCoverage: 50],
+                     healthyTarget: [methodCoverage: 40],
+                     unhealthyTarget: [methodCoverage: 20],
                      failingTarget: [methodCoverage: 0]
                    ])
              }

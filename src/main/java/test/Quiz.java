@@ -112,6 +112,7 @@ public class Quiz {
             do{
                 System.out.println("Enter the Question");
                 question = in.next();
+                in.nextLine();
                 System.out.println("Press Y to confirm");
                 confirm = in.next();
                 confirm = confirm.toLowerCase();

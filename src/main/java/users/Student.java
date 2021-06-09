@@ -152,21 +152,28 @@ public class Student extends User {
                         AnswersCntainer[i][2] = String.valueOf(Q_id);
                         System.out.println("Q number " + a + " : ");
                         System.out.println(Q);
+                        System.out.println();
                         System.out.println("Please select an answer: ");
-                        System.out.println("1. is a ");
-                        System.out.println("2. as a ");
-                        System.out.println("3. dont know");
-                        System.out.println("4. all");
+                        System.out.println("(1 indicates \"not at all\" and 5 indicates \"a lot\")");
+                        System.out.println();
+                        System.out.println("1.Not at all ");
+                        System.out.println("2.Slightly ");
+                        System.out.println("3.Moderately");
+                        System.out.println("4.Very much");
+                        System.out.println("5.Feels that");
                         int Ans = in.nextInt();
                         while (Ans != 1 && Ans != 2 && Ans != 3 && Ans != 4) {
+                            System.out.println();
                             System.out.println("You have selected a wrong number, please select again:");
                             System.out.println("Q number " + a + " : ");
                             System.out.println(Q);
-                            System.out.println("Please select an answer: ");
-                            System.out.println("1. is a ");
-                            System.out.println("2. as a ");
-                            System.out.println("3. dont know");
-                            System.out.println("4. all");
+                            System.out.println("(1 indicates \"not at all\" and 5 indicates \"a lot\")");
+                            System.out.println();
+                            System.out.println("1.Not at all ");
+                            System.out.println("2.Slightly ");
+                            System.out.println("3.Moderately");
+                            System.out.println("4.Very much");
+                            System.out.println("5.Feels very much like that");
                             Ans = in.nextInt();
                         }
                         AnswersCntainer[i][3] = String.valueOf(Ans);
@@ -183,14 +190,17 @@ public class Student extends User {
                         }
                         if (temp_choice == 1) {
                             while (Ans != 1 && Ans != 2 && Ans != 3 && Ans != 4) {
+                                System.out.println();
                                 System.out.println("You have selected a wrong number, please select again:");
                                 System.out.println("Q number " + a + " : ");
                                 System.out.println(Q);
-                                System.out.println("Please select an answer: ");
-                                System.out.println("1. is a ");
-                                System.out.println("2. as a ");
-                                System.out.println("3. dont know");
-                                System.out.println("4. all");
+                                System.out.println("(1 indicates \"not at all\" and 5 indicates \"a lot\")");
+                                System.out.println();
+                                System.out.println("1.Not at all ");
+                                System.out.println("2.Slightly ");
+                                System.out.println("3.Moderately");
+                                System.out.println("4.Very much");
+                                System.out.println("5.Feels very much like that");
                                 Ans = in.nextInt();
                                 AnswersCntainer[i][3] = String.valueOf(Ans);
                             }
